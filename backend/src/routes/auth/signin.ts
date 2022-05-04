@@ -17,7 +17,11 @@ router.post(
     body("password")
       .trim()
       .notEmpty()
-      .withMessage("You must supply a password to sign in"),
+      .withMessage("You must supply a password to sign in")
+      .isLength({ min: 8, max: 20 })
+      .withMessage(
+        "Password must be at least 8 characters at most 20 characters"
+      ),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
