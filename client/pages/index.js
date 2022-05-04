@@ -161,10 +161,10 @@ export default function Home() {
         className="flex flex-nowrap justify-between mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28"
       >
         <div className="">
-          <p class="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
+          <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
             What is Post CMS
           </p>
-          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+          <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
             Post CMS (Post Content Management System) is a system you can send
             posts globally and publicly that includes images videos and
             paragraphs. In this system everyone can send posts or review the
@@ -185,11 +185,11 @@ export default function Home() {
         </div>
         <div className="mb-10">
           <div>
-            <p class="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
+            <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
               Why Post CMS
             </p>
           </div>
-          <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+          <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
             Post CMS allows you to send any type of posts with no subject
             restrictions or no any censorship policy. Every post has made in
             here is public so you can access every post from every sender that
@@ -198,8 +198,8 @@ export default function Home() {
         </div>
       </section>
       <section>
-        <footer class="text-center bg-gray-900 text-white">
-          <div class="text-center p-4">Post Content Management System</div>
+        <footer className="text-center bg-gray-900 text-white">
+          <div className="text-center p-4">Post Content Management System</div>
         </footer>
       </section>
     </div>

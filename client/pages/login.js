@@ -18,15 +18,13 @@ export default function Login() {
           />
           <div className="self-start">
             <input type="checkbox" name="RememberMe" />
-            <label for="RememberMe"> Remember me</label>
+            <label htmlFor="RememberMe"> Remember me</label>
           </div>
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 rounded-md text-white h-10 mt-6"
           >
-            <onclick>
-              <Link href="/">Sign in</Link>
-            </onclick>
+            <Link href="/">Sign in</Link>
           </button>
           <p className="mt-1">
             Dont have a account?
