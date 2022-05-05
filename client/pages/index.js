@@ -161,7 +161,7 @@ export default function Home() {
         className="flex flex-nowrap justify-between mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28"
       >
         <div className="">
-          <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
+          <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight ">
             What is Post CMS
           </p>
           <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
@@ -185,7 +185,7 @@ export default function Home() {
         </div>
         <div className="mb-10">
           <div>
-            <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight dark:text-slate-50 ">
+            <p className="mt-4 text-3xl sm:text-4xl text-slate-900 font-extrabold tracking-tight">
               Why Post CMS
             </p>
           </div>

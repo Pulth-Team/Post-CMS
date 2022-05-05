@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express from "express";
+import express, { Request, Response } from "express";
 import "express-async-errors";
 import cookieSession from "cookie-session";
 
@@ -28,7 +28,7 @@ app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 
-app.all("*", async (req, res) => {
+app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();
 });
 
