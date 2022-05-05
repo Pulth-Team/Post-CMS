@@ -24,8 +24,6 @@ app.use(
   })
 );
 
-//app.use(express.urlencoded({ extended: true }));
-
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
