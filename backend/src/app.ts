@@ -13,6 +13,8 @@ import { signupRouter } from "./routes/auth/signup";
 import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
 
+import { articleCreateRouter } from "./routes/article/create";
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -27,6 +29,8 @@ app.use(
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
+
+app.use(articleCreateRouter);
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();
