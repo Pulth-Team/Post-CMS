@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 interface ArticleBlock {
   id: string;
@@ -7,7 +7,7 @@ interface ArticleBlock {
 }
 
 interface ArticleAttrs {
-  userId: ObjectId;
+  userId: mongoose.Types.ObjectId;
   time: number;
   version: string;
   blocks: ArticleBlock[];
@@ -45,6 +45,10 @@ const articleSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+articleSchema.statics.build = (attrs: ArticleAttrs) => {
+  return new Article(attrs);
+};
 
 const Article = mongoose.model<ArticleDocument, ArticleModel>(
   "Article",
