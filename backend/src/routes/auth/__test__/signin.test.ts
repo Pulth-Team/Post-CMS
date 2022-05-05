@@ -61,7 +61,7 @@ it("fails when credentials not supplied", async () => {
   await request(app).post("/api/auth/signin").send({}).expect(400);
 });
 
-it("fails when password not supplied", async () => {
+it("fails when email and password not supplied", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
@@ -76,16 +76,6 @@ it("fails when password not supplied", async () => {
       email: "test@test.com",
     })
     .expect(400);
-});
-
-it("fails when email not supplied", async () => {
-  await request(app)
-    .post("/api/auth/signup")
-    .send({
-      email: "test@test.com",
-      password: "password",
-    })
-    .expect(201);
 
   await request(app)
     .post("/api/auth/signin")
