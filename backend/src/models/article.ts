@@ -13,13 +13,12 @@ interface ArticleAttrs {
   blocks: ArticleBlock[];
 }
 
-interface ArticleModel extends mongoose.Model<ArticleDocument> {
+interface ArticleDocument extends mongoose.Document {
   build(attrs: ArticleAttrs): ArticleDocument;
 }
 
-interface UserDoc extends mongoose.Document {
-  email: string;
-  password: string;
+interface ArticleModel extends mongoose.Model<ArticleDocument> {
+  build(attrs: ArticleAttrs): ArticleDocument;
 }
 
 const articleSchema = new mongoose.Schema({
@@ -47,4 +46,9 @@ const articleSchema = new mongoose.Schema({
   },
 });
 
-const Article = mongoose.model<Article>("Article", userSchema);
+const Article = mongoose.model<ArticleDocument, ArticleModel>(
+  "Article",
+  articleSchema
+);
+
+export { Article };
