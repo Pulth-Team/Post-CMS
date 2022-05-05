@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { Request, Response } from "express";
+import cors from "cors";
 import "express-async-errors";
 import cookieSession from "cookie-session";
 
@@ -14,6 +15,7 @@ import { signoutRouter } from "./routes/auth/signout";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use(
   cookieSession({
