@@ -18,11 +18,19 @@ const router = express.Router();
  *  Body
  *    @params {Number} version
  *    @params {ArticleBlock[]} blocks
- *    @params {String} Title
+ *    @params {String} title
  */
 router.post(
   "/api/article/create",
   [
+    body("title")
+      .notEmpty()
+      .withMessage("Title must be provided")
+      .isString()
+      .withMessage("Title must be a string")
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage("Title can be up to 50 characters"),
     body("version")
       .notEmpty()
       .withMessage("Version must be provided")
