@@ -12,6 +12,7 @@ import { errorHandler } from "./middlewares/error-handler";
 import { signupRouter } from "./routes/auth/signup";
 import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
+import { checkUserRouter } from "./routes/auth/check-user";
 
 import { articleCreateRouter } from "./routes/article/create";
 
@@ -29,6 +30,7 @@ app.use(
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
+app.use(checkUserRouter);
 
 app.use(articleCreateRouter);
 
