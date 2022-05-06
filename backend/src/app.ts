@@ -14,6 +14,7 @@ import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
 
 import { articleCreateRouter } from "./routes/article/create";
+import { articleUserRouter } from "./routes/article/user";
 
 const app = express();
 app.use(express.json());
@@ -31,6 +32,7 @@ app.use(signinRouter);
 app.use(signoutRouter);
 
 app.use(articleCreateRouter);
+app.use(articleUserRouter);
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();
