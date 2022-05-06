@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import {useState} from 'react'
-
-
+import styles from '../styles/Dashboard.module.css'
 
 export default function Dashboard() {
 
@@ -44,7 +43,7 @@ export default function Dashboard() {
             </div>
         </navbar>
         <sidebar>
-            <div className={sideBar ? "sidebar" : " sidebar active"}>
+            <div className={sideBar ? styles.sidebar : styles.activeSidebar}>
                 <div className="h-1/5 flex align-center justify-around flex-col">
                     <div className="flex justify-start w-full p-2">
                         <i className="bx bx-layout text-zinc-500 self-center"></i>
@@ -73,82 +72,6 @@ export default function Dashboard() {
         </sidebar>
     
        </div>
-       <style jsx>{`
-       .sidebar {
-            display:flex;
-            flex-direction:column;
-            position:fixed;
-            left:0;
-            transition:300ms;
-            height:95vh;
-            background-color: rgb(39 39 42);
-            width:3vw;
-            justify-content:space-between;            
-
-        }
-        .sidebar:hover{
-            transition:200ms;
-            width:12vw;
-        }
-        .sidebar p {
-            color:white;
-            opacity:0;
-            position:absolute;
-            display:inline;
-            font-size:1.3rem;
-            margin-left:0
-            z-index:1;
-        }
-        .sidebar img{
-            width:2vw;
-            height:4vh;
-            transition:300ms;
-        }
-        .sidebar i{
-            font-size:2rem;
-            z-index:2
-        }
-       .sidebar.active{
-            transition:200ms;
-            width:12vw;
-           
-        }
-        .sidebar.active p{
-            transform:scale(1);
-            position:static;
-            transition:300ms;
-            margin-left:10px;
-            opacity:1;
-        }
-        .sidebar.active img{
-            width:10vw;
-            height:20vh;
-            transition:200ms;
-        }
-        .sidebar div div{
-            
-        }
-        .sidebar div div:hover{
-            transition:200ms;
-            background-color:rgba(55, 48, 163,0.5);
-            border-left:10px solid rgb(55,48,163);
-        }
-        .sidebar:hover p{
-            transform:scale(1);
-            position:static;
-            transition:300ms;
-            margin-left:10px;
-            opacity:1;
-        }
-        .sidebar:hover img{
-            width:10vw;
-            height:20vh;
-            transition:200ms;
-        }
-        
-       `} 
-       </style>
-
    </div>
   )
 }
