@@ -13,8 +13,11 @@ import { signupRouter } from "./routes/auth/signup";
 import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
 import { checkUserRouter } from "./routes/auth/check-user";
+<<<<<<< HEAD
 
 import { articleCreateRouter } from "./routes/article/create";
+=======
+>>>>>>> CurrentUserEndpoint
 
 const app = express();
 app.use(express.json());
@@ -31,8 +34,11 @@ app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(checkUserRouter);
+<<<<<<< HEAD
 
 app.use(articleCreateRouter);
+=======
+>>>>>>> CurrentUserEndpoint
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();
