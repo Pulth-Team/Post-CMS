@@ -14,6 +14,12 @@ router.post(
   "/api/auth/signin",
   [
     body("email").isEmail().withMessage("Email must be valid"),
+    body("username")
+      .trim()
+      .isLength({ min: 4, max: 50 })
+      .withMessage(
+        "username must be at least 4 characters, and max must be at least 50 characters"
+      ),
     body("password")
       .trim()
       .notEmpty()
@@ -25,9 +31,11 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, username, password } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
 
     if (!existingUser) throw new BadRequestError("Invalid Credentials");
 
