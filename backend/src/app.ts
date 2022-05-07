@@ -20,8 +20,16 @@ import { articleSlugRouter } from "./routes/article/slug";
 import { articleExploreRouter } from "./routes/article/explore";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(cors());
+
+//app.set("trust proxy", true);
 
 app.use(
   cookieSession({
