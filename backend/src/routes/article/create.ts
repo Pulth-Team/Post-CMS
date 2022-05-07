@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import mongoose, { ObjectId } from "mongoose";
+import slugify from "slugify";
 
 import { validateRequest } from "../../middlewares/validate-request";
 import { currentUser } from "../../middlewares/current-user";
@@ -17,10 +18,19 @@ const router = express.Router();
  *  Body
  *    @params {Number} version
  *    @params {ArticleBlock[]} blocks
+ *    @params {String} title
  */
 router.post(
   "/api/article/create",
   [
+    body("title")
+      .notEmpty()
+      .withMessage("Title must be provided")
+      .isString()
+      .withMessage("Title must be a string")
+      .trim()
+      .isLength({ max: 50 })
+      .withMessage("Title can be up to 50 characters"),
     body("version")
       .notEmpty()
       .withMessage("Version must be provided")
@@ -49,10 +59,14 @@ router.post(
   currentUser,
   requireAuth,
   (req: Request, res: Response) => {
-    console.log(req.body);
+    const slug = slugify(req.body.title, {
+      lower: true,
+    });
+
     const article = Article.build({
       userId: new mongoose.Types.ObjectId(req.currentUser!.id),
-      time: Date.now(),
+      title: req.body.title,
+      slug: slug,
       version: req.body.version,
       blocks: req.body.blocks,
     });

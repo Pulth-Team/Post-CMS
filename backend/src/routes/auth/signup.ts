@@ -9,6 +9,16 @@ import { User } from "../../models/user";
 
 const router = express.Router();
 
+/**
+ * @required
+ * Authorization Cookie required
+ *
+ * Body
+ *  @params {String} username
+ *  @params {String} email
+ *  @params {String} password
+ *
+ */
 router.post(
   "/api/auth/signup",
   [
@@ -19,18 +29,30 @@ router.post(
       .withMessage(
         "Password must be at least 8 characters at most 20 characters"
       ),
+    body("username")
+      .notEmpty()
+      .withMessage("username must be provided")
+      .trim()
+      .isLength({ min: 4, max: 50 })
+      .withMessage(
+        "username must be at least 4 characters, and max must be at least 50 characters"
+      ),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ username }, { email }],
+    });
     if (existingUser) {
-      throw new BadRequestError("E-mail in use");
+      throw new BadRequestError("E-mail or Username is in use");
     }
 
-    const user = User.build({ email, password });
-    await user.save();
+    const user = User.build({ username, email, password });
+    await user.save().catch((err) => {
+      console.log(err);
+    });
     // Generate JWT
     const userJwt = await jwt.sign(
       {
