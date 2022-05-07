@@ -13,8 +13,12 @@ const router = express.Router();
 router.post(
   "/api/auth/signin",
   [
-    body("email").isEmail().withMessage("Email must be valid"),
+    body("email")
+      .if(body("username").not().exists())
+      .isEmail()
+      .withMessage("Email must be valid"),
     body("username")
+      .if(body("email").not().exists())
       .trim()
       .isLength({ min: 4, max: 50 })
       .withMessage(
