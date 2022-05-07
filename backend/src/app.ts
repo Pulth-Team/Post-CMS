@@ -16,6 +16,7 @@ import { checkUserRouter } from "./routes/auth/check-user";
 
 import { articleCreateRouter } from "./routes/article/create";
 import { articleUserRouter } from "./routes/article/user";
+import { articleSlugRouter } from "./routes/article/slug";
 
 const app = express();
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use(checkUserRouter);
 
 app.use(articleCreateRouter);
 app.use(articleUserRouter);
+app.use(articleSlugRouter);
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();

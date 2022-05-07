@@ -29,7 +29,7 @@ router.post(
       .isString()
       .withMessage("Title must be a string")
       .trim()
-      .isLength({ max: 50 })
+      .isLength({ min: 5, max: 50 })
       .withMessage("Title can be up to 50 characters"),
     body("version")
       .notEmpty()
@@ -61,6 +61,7 @@ router.post(
   (req: Request, res: Response) => {
     const slug = slugify(req.body.title, {
       lower: true,
+      strict: true,
     });
 
     const article = Article.build({
