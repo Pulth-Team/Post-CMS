@@ -19,8 +19,16 @@ import { articleUserRouter } from "./routes/article/user";
 import { articleSlugRouter } from "./routes/article/slug";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(cors());
+
+//app.set("trust proxy", true);
 
 app.use(
   cookieSession({
