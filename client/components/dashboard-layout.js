@@ -66,9 +66,19 @@ export default function Layout({ title, username, relatedTitle, children }) {
                 return (
                   <div
                     key={val.title}
-                    className="text-gray-300 flex px-3  py-2 gap-2 items-center"
+                    className={
+                      router.asPath == val.href || val.title == relatedTitle
+                        ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                        : "text-gray-300 flex px-3 py-2 gap-2 items-center"
+                    }
                   >
-                    <val.icon className="w-6 h-6"></val.icon>
+                    <val.icon
+                      className={
+                        router.asPath == val.href || val.title == relatedTitle
+                          ? "text-white w-6 h-6"
+                          : "w-6 h-6"
+                      }
+                    ></val.icon>
                     <p
                       className={
                         router.asPath == val.href || val.title == relatedTitle
@@ -89,9 +99,19 @@ export default function Layout({ title, username, relatedTitle, children }) {
                 return (
                   <div
                     key={val.title}
-                    className="text-gray-300 flex px-3 py-2 gap-2 items-center"
+                    className={
+                      router.asPath == val.href || val.title == relatedTitle
+                        ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                        : "text-gray-300 flex px-3 py-2 gap-2 items-center"
+                    }
                   >
-                    <val.icon className="w-6 h-6"></val.icon>
+                    <val.icon
+                      className={
+                        router.asPath == val.href || val.title == relatedTitle
+                          ? "text-white w-6 h-6"
+                          : "w-6 h-6"
+                      }
+                    ></val.icon>
                     <p
                       className={
                         router.asPath == val.href || val.title == relatedTitle
