@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import {
   MenuIcon,
   HomeIcon,
@@ -64,31 +65,32 @@ export default function Layout({ title, username, relatedTitle, children }) {
             {MenuData.map((val) => {
               if (val.position == "up")
                 return (
-                  <div
-                    key={val.title}
-                    className={
-                      router.asPath == val.href || val.title == relatedTitle
-                        ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
-                        : "text-gray-300 flex px-3 py-2 gap-2 items-center"
-                    }
-                  >
-                    <val.icon
+                  <Link href={val.href} key={val.title}>
+                    <div
                       className={
                         router.asPath == val.href || val.title == relatedTitle
-                          ? "text-white w-6 h-6"
-                          : "w-6 h-6"
-                      }
-                    ></val.icon>
-                    <p
-                      className={
-                        router.asPath == val.href || val.title == relatedTitle
-                          ? "text-white"
-                          : ""
+                          ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                          : "text-gray-300 flex px-3 py-2 gap-2 items-center cursor-pointer"
                       }
                     >
-                      {val.title}
-                    </p>
-                  </div>
+                      <val.icon
+                        className={
+                          router.asPath == val.href || val.title == relatedTitle
+                            ? "text-white w-6 h-6"
+                            : "w-6 h-6"
+                        }
+                      ></val.icon>
+                      <p
+                        className={
+                          router.asPath == val.href || val.title == relatedTitle
+                            ? "text-white"
+                            : ""
+                        }
+                      >
+                        {val.title}
+                      </p>
+                    </div>
+                  </Link>
                 );
             })}
           </div>
@@ -97,31 +99,32 @@ export default function Layout({ title, username, relatedTitle, children }) {
             {MenuData.map((val) => {
               if (val.position == "down")
                 return (
-                  <div
-                    key={val.title}
-                    className={
-                      router.asPath == val.href || val.title == relatedTitle
-                        ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
-                        : "text-gray-300 flex px-3 py-2 gap-2 items-center"
-                    }
-                  >
-                    <val.icon
+                  <Link href={val.href} key={val.title}>
+                    <div
                       className={
                         router.asPath == val.href || val.title == relatedTitle
-                          ? "text-white w-6 h-6"
-                          : "w-6 h-6"
-                      }
-                    ></val.icon>
-                    <p
-                      className={
-                        router.asPath == val.href || val.title == relatedTitle
-                          ? "text-white"
-                          : ""
+                          ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                          : "text-gray-300 flex px-3 py-2 gap-2 items-center cursor-pointer"
                       }
                     >
-                      {val.title}
-                    </p>
-                  </div>
+                      <val.icon
+                        className={
+                          router.asPath == val.href || val.title == relatedTitle
+                            ? "text-white w-6 h-6"
+                            : "w-6 h-6"
+                        }
+                      ></val.icon>
+                      <p
+                        className={
+                          router.asPath == val.href || val.title == relatedTitle
+                            ? "text-white"
+                            : ""
+                        }
+                      >
+                        {val.title}
+                      </p>
+                    </div>
+                  </Link>
                 );
             })}
           </div>
