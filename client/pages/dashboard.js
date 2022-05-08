@@ -6,7 +6,7 @@ export default function TestPage() {
 
 TestPage.getLayout = function getLayout(page) {
   return (
-    <Dashboard title="Home Page" username="Momirtumaaaaaa">
+    <Dashboard title="Home Page" username="Arda">
       {page}
     </Dashboard>
   );
