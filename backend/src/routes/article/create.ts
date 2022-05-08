@@ -20,6 +20,19 @@ const router = express.Router();
  *    @params {ArticleBlock[]} blocks
  *    @params {String} title
  */
+
+//Make id for unique slug
+function makeid(length: Number) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 router.post(
   "/api/article/create",
   [
@@ -59,10 +72,12 @@ router.post(
   currentUser,
   requireAuth,
   (req: Request, res: Response) => {
-    const slug = slugify(req.body.title, {
+    let slug = slugify(req.body.title, {
       lower: true,
       strict: true,
     });
+
+    slug += "-" + makeid(4);
 
     const article = Article.build({
       userId: new mongoose.Types.ObjectId(req.currentUser!.id),
