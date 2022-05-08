@@ -17,6 +17,7 @@ import { checkUserRouter } from "./routes/auth/check-user";
 import { articleCreateRouter } from "./routes/article/create";
 import { articleUserRouter } from "./routes/article/user";
 import { articleSlugRouter } from "./routes/article/slug";
+import { articleExploreRouter } from "./routes/article/explore";
 
 const app = express();
 app.use(express.json());
@@ -34,6 +35,7 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(checkUserRouter);
 
+app.use(articleExploreRouter);
 app.use(articleCreateRouter);
 app.use(articleUserRouter);
 app.use(articleSlugRouter);
