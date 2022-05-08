@@ -1,7 +1,22 @@
 import Dashboard from "../components/dashboard-layout";
+import axios from "axios";
 
-export default function ExplorePage() {
-  return <div></div>;
+export default function ExplorePage({ data }) {
+  return (
+    <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+      {data.map((article) => {
+        return (
+          <a href={"/article/" + article.slug}>
+            <div className="flex justify-center items-end w-full h-60 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md lg:h-40 xl:h-60 overflow-hidden group-hover:opacity-75 aspect-none hover:cursor-pointer bg-cover bg-[url('https://aquajogclub.com/wp-content/uploads/2019/12/placeholder.png')]">
+              <div className="flex w-full h-2/6 justify-center bg-gray-300 rounded-md items-center">
+                <h3 className="text-xl truncate px-5">{article.title}</h3>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  );
 }
 
 ExplorePage.getLayout = function getLayout(page) {
@@ -10,4 +25,14 @@ ExplorePage.getLayout = function getLayout(page) {
       {page}
     </Dashboard>
   );
+};
+
+ExplorePage.getInitialProps = async ({ req }) => {
+  const response = await axios
+    .get("http://localhost:4000/api/article/explore")
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return { data: response.data };
 };
