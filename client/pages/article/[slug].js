@@ -52,8 +52,8 @@ SlugPage.getLayout = function getLayout(page) {
   );
 };
 
-SlugPage.getInitialProps = async ({ req }) => {
-  const slug = req.url.split("/")[2];
+SlugPage.getInitialProps = async ({ query }) => {
+  const slug = query.slug;
   const response = await axios
     .get("http://localhost:4000/api/article/" + slug)
     .catch((err) => {
