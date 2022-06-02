@@ -1,19 +1,21 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [emailErrors, setEmailErrors] = useState([]);
+  const [usernameErrors, setUsernameErrors] = useState([]);
+
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    axios;
-    event.preventDefault();
     setPasswordErrors([]);
     setEmailErrors([]);
 
@@ -21,17 +23,22 @@ export default function Login() {
       const response = await axios.post(
         "http://localhost:4000/api/auth/signup",
         {
+          username,
           email,
           password,
         }
       );
+      localStorage.setItem("userData", JSON.stringify(response.data));
+      router.push("/dashboard");
     } catch (e) {
+      console.log(e);
       e.response.data.errors.map((err) => {
         if (err.field === "password") {
           setPasswordErrors([...passwordErrors, err]);
         } else if (err.field === "email") {
           setEmailErrors([...emailErrors, err]);
-        }
+        } else if (err.field === "username")
+          setUsernameErrors([...usernameErrors, err]);
       });
     }
   };
@@ -41,6 +48,23 @@ export default function Login() {
       <div className="flex justify-center items-center grow shrink">
         <div className="flex flex-col w-full items-center sm:w-3/4">
           <h1 className="text-4xl font-bold my-8">Sign up</h1>
+          <input
+            type="text"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            className="w-4/5 border-2 rounded-md my-1.5 p-2"
+            placeholder="Username"
+          />
+
+          {usernameErrors.length > 0 && (
+            <div className="w-4/5 h-full p-1 text-gray-700">
+              {usernameErrors.map((err, index) => (
+                <li key={index}>{err.message}</li>
+              ))}
+            </div>
+          )}
+
           <input
             type="text"
             onChange={(e) => {
@@ -71,6 +95,7 @@ export default function Login() {
               ))}
             </div>
           )}
+
           <div className="mr-3 w-3/4">
             <input type="checkbox" name="RememberMe" />
             <label htmlFor="RememberMe"> Remember me</label>
