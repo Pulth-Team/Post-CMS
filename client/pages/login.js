@@ -1,6 +1,8 @@
 import Link from "next/link";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+import { login } from "../utils/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,6 +25,7 @@ export default function Login() {
         }
       );
       console.log(response);
+      if (response.status === 200) login({ token: response.data.token });
     } catch (e) {
       e.response.data.errors.map((err) => {
         if (err.field === "password") {

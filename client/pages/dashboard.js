@@ -1,13 +1,20 @@
 import Dashboard from "../components/dashboard-layout";
+import { withAuth } from "../utils/auth";
 
-export default function TestPage() {
-  return <div></div>;
-}
+const DashboardPage = (ctx) => {
+  return <div>hiiii</div>;
+};
 
-TestPage.getLayout = function getLayout(page) {
+DashboardPage.getLayout = (page) => {
   return (
     <Dashboard title="Home Page" username="Arda">
       {page}
     </Dashboard>
   );
 };
+
+DashboardPage.getInitialProps = async (ctx) => {
+  return { data: true };
+};
+
+export default withAuth(DashboardPage);

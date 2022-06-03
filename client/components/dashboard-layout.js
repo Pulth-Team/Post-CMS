@@ -13,6 +13,7 @@ import {
 import { Popover } from "@headlessui/react";
 
 import { useRouter } from "next/router";
+import { logout } from "../utils/auth";
 
 export default function Layout({ title, username, relatedTitle, children }) {
   const MenuData = [
@@ -188,8 +189,11 @@ export default function Layout({ title, username, relatedTitle, children }) {
                       <CogIcon className="w-6 h-6 "></CogIcon>
                       <p>Settings</p>
                     </div>
-                    <div className="flex gap-2 items-center py-1">
-                      <LogoutIcon className="w-6 h-6 "></LogoutIcon>
+                    <div
+                      className="flex gap-2 items-center py-1"
+                      onClick={logout}
+                    >
+                      <LogoutIcon className="w-6 h-6"></LogoutIcon>
                       <p>Log out</p>
                     </div>
                   </div>

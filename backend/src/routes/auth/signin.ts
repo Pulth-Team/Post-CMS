@@ -58,11 +58,19 @@ router.post(
       process.env.JWT_KEY!
     );
 
-    req.session = {
-      jwt: userJwt,
-    };
+    // TODO: remove cookie-session and implement our cookie strategy
 
-    res.status(200).send(existingUser);
+    // req.session = {
+    //   jwt: userJwt,
+    // };
+
+    res.status(200).send({
+      id: existingUser._id,
+      email: existingUser.email,
+      username: existingUser.username,
+
+      token: userJwt,
+    });
   }
 );
 
