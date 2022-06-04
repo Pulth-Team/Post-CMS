@@ -1,8 +1,7 @@
 import Link from "next/link";
 import axios from "axios";
-import { useState } from "react";
-
-import { login } from "../utils/auth";
+import { useState, useContext } from "react";
+import AuthContext from "../context/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,22 +10,25 @@ export default function Login() {
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [emailErrors, setEmailErrors] = useState([]);
 
+  const authContext = useContext(AuthContext);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setPasswordErrors([]);
     setEmailErrors([]);
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/signin",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("/api/auth/signin", {
+        email,
+        password,
+      });
       console.log(response);
-      if (response.status === 200) login({ token: response.data.token });
+
+      //if (response.status === 200) login({ token: response.data.token });
+      if (response.status === 200)
+        authContext.setAuthState({ jwt_token: response.data.token });
     } catch (e) {
+      console.error(e);
       e.response.data.errors.map((err) => {
         if (err.field === "password") {
           const errs = [...passwordErrors, err];

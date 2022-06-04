@@ -20,14 +20,11 @@ export default function Login() {
     setEmailErrors([]);
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/auth/signup",
-        {
-          username,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("/api/auth/signup", {
+        username,
+        email,
+        password,
+      });
       localStorage.setItem("userData", JSON.stringify(response.data));
       router.push("/dashboard");
     } catch (e) {
