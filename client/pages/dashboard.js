@@ -1,23 +1,41 @@
 import Dashboard from "../components/dashboard-layout";
-import AuthContext from "../context/auth";
-import { useContext } from "react";
 
-const DashboardPage = (ctx) => {
-  const authContext = useContext(AuthContext);
-  console.log(authContext.isUserAuthenticated(true));
-  return <div>hiiii</div>;
+import { useEffect, useState } from "react";
+
+import isAuthenticated from "../lib/isAuthenticated";
+import redirect from "../lib/redirect";
+
+const DashboardPage = () => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const a = JSON.parse(localStorage.getItem("userData"));
+    setUserData(a);
+  }, []);
+
+  return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
 };
 
 DashboardPage.getLayout = (page) => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const a = JSON.parse(localStorage.getItem("userData"));
+    setUserData(a);
+  }, []);
+
   return (
-    <Dashboard title="Home Page" username="Arda">
+    <Dashboard title="Home Page" username={userData.username}>
       {page}
     </Dashboard>
   );
 };
 
 DashboardPage.getInitialProps = async (ctx) => {
-  return { data: true };
+  const isAuth = await isAuthenticated(ctx);
+  if (!isAuth) redirect("/login", ctx);
+
+  return { isAuth };
 };
 
 export default DashboardPage;

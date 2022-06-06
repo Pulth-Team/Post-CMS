@@ -1,7 +1,7 @@
 import Link from "next/link";
 import axios from "axios";
 import { useState, useContext } from "react";
-import AuthContext from "../context/auth";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ export default function Login() {
   const [passwordErrors, setPasswordErrors] = useState([]);
   const [emailErrors, setEmailErrors] = useState([]);
 
-  const authContext = useContext(AuthContext);
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -22,11 +22,14 @@ export default function Login() {
         email,
         password,
       });
-      console.log(response);
 
       //if (response.status === 200) login({ token: response.data.token });
-      if (response.status === 200)
-        authContext.setAuthState({ jwt_token: response.data.token });
+      if (response.status === 200) {
+        delete response.data.token;
+        const userData = response.data;
+        localStorage.setItem("userData", JSON.stringify(userData));
+        router.push("/dashboard");
+      }
     } catch (e) {
       console.error(e);
       e.response.data.errors.map((err) => {

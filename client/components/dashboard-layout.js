@@ -52,13 +52,6 @@ export default function Layout({ title, username, relatedTitle, children }) {
 
   return (
     <div>
-      <Head>
-        <link
-          href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-          rel="stylesheet"
-        />
-      </Head>
-
       <div className="flex w-full h-screen">
         <div className="sm:flex sm:w-48 pt-16 flex-col hidden sm:flex-shrink-0 sm:flex-grow-0 bg-neutral-600 justify-between">
           <div>

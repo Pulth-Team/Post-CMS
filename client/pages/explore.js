@@ -1,6 +1,11 @@
 import Dashboard from "../components/dashboard-layout";
+
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+
+import isAuthenticated from "../lib/isAuthenticated";
+import redirect from "../lib/redirect";
 
 export default function ExplorePage({ data }) {
   return (
@@ -21,14 +26,24 @@ export default function ExplorePage({ data }) {
 }
 
 ExplorePage.getLayout = function getLayout(page) {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const a = JSON.parse(localStorage.getItem("userData"));
+    setUserData(a);
+  }, []);
+
   return (
-    <Dashboard title="Explore" username="Arda">
+    <Dashboard title="Explore" username={userData.username}>
       {page}
     </Dashboard>
   );
 };
 
-ExplorePage.getInitialProps = async ({ req }) => {
+ExplorePage.getInitialProps = async (ctx) => {
+  const isAuth = await isAuthenticated(ctx);
+  if (!isAuth) redirect("/login", ctx);
+
   const response = await axios.get("/api/article/explore").catch((err) => {
     console.log(err);
   });

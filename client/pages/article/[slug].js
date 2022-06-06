@@ -1,6 +1,7 @@
 import Dashboard from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 import Header from "../../components/slug/header";
 import Paragraph from "../../components/slug/paragraph";
@@ -44,16 +45,25 @@ export default function SlugPage({ data }) {
 }
 
 SlugPage.getLayout = function getLayout(page) {
-  console.log(page);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    const a = JSON.parse(localStorage.getItem("userData"));
+    setUserData(a);
+  }, []);
+
   return (
-    <Dashboard title={page.props.data.title} username="Arda">
+    <Dashboard title={page.props.data.title} username={userData.username}>
       {page}
     </Dashboard>
   );
 };
 
-SlugPage.getInitialProps = async ({ query }) => {
-  const slug = query.slug;
+SlugPage.getInitialProps = async (ctx) => {
+  const isAuth = await isAuthenticated(ctx);
+  if (!isAuth) redirect("/login", ctx);
+
+  const slug = ctx.query.slug;
   const response = await axios.get("/api/article/" + slug).catch((err) => {
     console.log(err);
   });
