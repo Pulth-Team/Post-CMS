@@ -15,6 +15,7 @@ it("fails when an incorrect password is supplied", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
@@ -33,6 +34,7 @@ it("responds with a cookie when given valid credentials", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
@@ -41,18 +43,21 @@ it("responds with a cookie when given valid credentials", async () => {
   const response = await request(app)
     .post("/api/auth/signin")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
     .expect(200);
 
-  expect(response.get("Set-Cookie")).toBeDefined();
+  //expect(response.get("Set-Cookie")).toBeDefined();
+  expect(response.body.token).toBeDefined();
 });
 
 it("fails when credentials not supplied", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
@@ -65,6 +70,7 @@ it("fails when email and password not supplied", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })

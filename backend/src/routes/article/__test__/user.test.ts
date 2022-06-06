@@ -10,6 +10,7 @@ it("fails when skip and limit parameter is not numeric", async () => {
   const response = await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })

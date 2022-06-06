@@ -5,6 +5,7 @@ it("retuns a 201 on successful signup", async () => {
   return request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
@@ -46,6 +47,7 @@ it("dissallows duplicate emails", async () => {
   await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
@@ -63,10 +65,12 @@ it("sets a cookie after successful signup", async () => {
   const response = await request(app)
     .post("/api/auth/signup")
     .send({
+      username: "username",
       email: "test@test.com",
       password: "password",
     })
     .expect(201);
 
   expect(response.get("Set-Cookie")).toBeDefined();
+  //expect(response.body.token).toBeDefined();
 });
