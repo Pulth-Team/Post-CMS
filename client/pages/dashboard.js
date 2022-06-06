@@ -1,7 +1,10 @@
 import Dashboard from "../components/dashboard-layout";
-import { withAuth } from "../utils/auth";
+import AuthContext from "../context/auth";
+import { useContext } from "react";
 
 const DashboardPage = (ctx) => {
+  const authContext = useContext(AuthContext);
+  console.log(authContext.isUserAuthenticated(true));
   return <div>hiiii</div>;
 };
 
@@ -17,4 +20,4 @@ DashboardPage.getInitialProps = async (ctx) => {
   return { data: true };
 };
 
-export default withAuth(DashboardPage);
+export default DashboardPage;

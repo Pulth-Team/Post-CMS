@@ -29,11 +29,9 @@ ExplorePage.getLayout = function getLayout(page) {
 };
 
 ExplorePage.getInitialProps = async ({ req }) => {
-  const response = await axios
-    .get("http://localhost:4000/api/article/explore")
-    .catch((err) => {
-      console.log(err);
-    });
+  const response = await axios.get("/api/article/explore").catch((err) => {
+    console.log(err);
+  });
 
   return { data: response.data };
 };

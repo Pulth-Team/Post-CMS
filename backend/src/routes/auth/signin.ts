@@ -60,9 +60,9 @@ router.post(
 
     // TODO: remove cookie-session and implement our cookie strategy
 
-    // req.session = {
-    //   jwt: userJwt,
-    // };
+    req.session = {
+      jwt: userJwt,
+    };
 
     res.status(200).send({
       id: existingUser._id,
