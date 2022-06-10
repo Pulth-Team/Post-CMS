@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import isAuthenticated from "../../lib/isAuthenticated";
 import redirect from "../../lib/redirect";
 
+import useUser from "../../hooks/use-user";
+
 import Header from "../../components/slug/header";
 import Paragraph from "../../components/slug/paragraph";
 import List from "../../components/slug/list";
@@ -47,12 +49,7 @@ export default function SlugPage({ data }) {
 }
 
 SlugPage.getLayout = function getLayout(page) {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
+  const { userData, loaded } = useUser();
 
   return (
     <Dashboard title={page.props.data.title} username={userData.username}>
