@@ -1,3 +1,4 @@
+import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import {
@@ -181,7 +182,13 @@ export default function Layout({ title, username, relatedTitle, children }) {
                       <CogIcon className="w-6 h-6 "></CogIcon>
                       <p>Settings</p>
                     </div>
-                    <div className="flex gap-2 items-center py-1">
+                    <div
+                      className="flex gap-2 items-center py-1"
+                      onClick={async () => {
+                        await axios.post("/api/auth/signout");
+                        router.push("/");
+                      }}
+                    >
                       <LogoutIcon className="w-6 h-6"></LogoutIcon>
                       <p>Log out</p>
                     </div>

@@ -9,7 +9,7 @@ function useUser() {
     axios
       .get("/api/auth/current")
       .then((response) => setUserData(response.data))
-      .catch((error) => err)
+      .catch((error) => error)
       .finally(() => setLoaded(true));
   }, []);
 
