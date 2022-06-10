@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import isAuthenticated from "../../lib/isAuthenticated";
+import redirect from "../../lib/redirect";
+
 import Header from "../../components/slug/header";
 import Paragraph from "../../components/slug/paragraph";
 import List from "../../components/slug/list";
@@ -12,7 +15,6 @@ import Image from "../../components/slug/image";
 export default function SlugPage({ data }) {
   const router = useRouter();
   const { slug } = router.query;
-  //console.log(data);
   const { blocks, title } = data;
 
   return (

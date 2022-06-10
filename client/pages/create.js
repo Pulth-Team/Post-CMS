@@ -1,17 +1,12 @@
 import Dashboard from "../components/dashboard-layout";
-import { useEffect, useState } from "react";
+import useUser from "../hooks/use-user";
 
 export default function CreatePage() {
   return <div></div>;
 }
 
 CreatePage.getLayout = function getLayout(page) {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
+  const { userData, loaded } = useUser();
 
   return (
     <Dashboard title="Create New" username={userData.username}>

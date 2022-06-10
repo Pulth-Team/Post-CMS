@@ -54,8 +54,10 @@ router.post(
       {
         id: existingUser.id,
         email: existingUser.email,
+        username: existingUser.username,
       },
-      process.env.JWT_KEY!
+      process.env.JWT_KEY!,
+      { expiresIn: "6h" }
     );
 
     // TODO: remove cookie-session and implement our cookie strategy

@@ -7,6 +7,8 @@ import Link from "next/link";
 import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
 
+import useUser from "../hooks/use-user";
+
 export default function ExplorePage({ data }) {
   return (
     <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
@@ -26,12 +28,7 @@ export default function ExplorePage({ data }) {
 }
 
 ExplorePage.getLayout = function getLayout(page) {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
+  const { userData, loaded } = useUser({});
 
   return (
     <Dashboard title="Explore" username={userData.username}>

@@ -1,27 +1,23 @@
 import Dashboard from "../components/dashboard-layout";
-import { useEffect, useState } from "react";
+import useUser from "../hooks/use-user";
 
 import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
 
 const SettingPage = function () {
-  return <div></div>;
+  return <div> </div>;
 };
 
-SettingPage.getLayout = function getLayout(page) {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
+SettingPage.getLayout = (page) => {
+  const { userData, loaded } = useUser();
 
   return (
-    <Dashboard title="Settings Page" username={userData.username}>
+    <Dashboard title="Settings" username={userData.username}>
       {page}
     </Dashboard>
   );
 };
+
 SettingPage.getInitialProps = async (ctx) => {
   const isAuth = await isAuthenticated(ctx);
   if (!isAuth) redirect("/login", ctx);

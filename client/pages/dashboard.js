@@ -1,28 +1,22 @@
 import Dashboard from "../components/dashboard-layout";
 
-import { useEffect, useState } from "react";
-
 import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
+import useUser from "../hooks/use-user";
 
 const DashboardPage = () => {
-  const [userData, setUserData] = useState({});
+  const { userData, loaded } = useUser();
 
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
-
-  return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
+  if (loaded) {
+    console.log(userData);
+    return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
+  } else {
+    return <div> Loading ...</div>;
+  }
 };
 
 DashboardPage.getLayout = (page) => {
-  const [userData, setUserData] = useState({});
-
-  useEffect(() => {
-    const a = JSON.parse(localStorage.getItem("userData"));
-    setUserData(a);
-  }, []);
+  const { userData, loaded } = useUser();
 
   return (
     <Dashboard title="Home Page" username={userData.username}>

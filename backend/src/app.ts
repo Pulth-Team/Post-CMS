@@ -13,6 +13,7 @@ import { signupRouter } from "./routes/auth/signup";
 import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
 import { checkUserRouter } from "./routes/auth/check-user";
+import { currentUserRouter } from "./routes/auth/current";
 
 import { articleCreateRouter } from "./routes/article/create";
 import { articleUserRouter } from "./routes/article/user";
@@ -38,11 +39,14 @@ app.use(
   })
 );
 
+// Auth routes
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(checkUserRouter);
+app.use(currentUserRouter);
 
+// article Routes
 app.use(articleExploreRouter);
 app.use(articleCreateRouter);
 app.use(articleUserRouter);

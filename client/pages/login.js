@@ -27,7 +27,10 @@ export default function Login() {
       if (response.status === 200) {
         delete response.data.token;
         const userData = response.data;
-        localStorage.setItem("userData", JSON.stringify(userData));
+
+        // only for remember me conditions
+        // localStorage.setItem("userData", JSON.stringify(userData));
+
         router.push("/dashboard");
       }
     } catch (e) {
