@@ -1,9 +1,3 @@
 export default function Delimiter() {
-  return (
-    <div>
-      <br />
-      <hr />
-      <br />
-    </div>
-  );
+  return <div class="delimiter"></div>;
 }

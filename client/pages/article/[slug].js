@@ -1,5 +1,6 @@
 import Dashboard from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -8,11 +9,10 @@ import redirect from "../../lib/redirect";
 
 import useUser from "../../hooks/use-user";
 
-import Header from "../../components/slug/header";
-import Paragraph from "../../components/slug/paragraph";
-import List from "../../components/slug/list";
 import Delimiter from "../../components/slug/delimiter";
-import Image from "../../components/slug/image";
+
+const Output = dynamic(() => import("editorjs-react-renderer"), { ssr: false });
+// import Output from "";
 
 export default function SlugPage({ data }) {
   const router = useRouter();
@@ -20,30 +20,15 @@ export default function SlugPage({ data }) {
   const { blocks, title } = data;
 
   return (
-    <div className="mx-auto w-full p-5 sm:w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12">
-      {blocks.map((block) => {
-        switch (block.type) {
-          case "header":
-            return (
-              <Header
-                key={block.id}
-                level={block.data.level}
-                id={block.id}
-                text={block.data.text}
-              />
-            );
-            break;
-          case "paragraph":
-            return <Paragraph key={block.id} text={block.data.text} />;
-            break;
-          case "list":
-            return <List key={block.id} items={block.data.items} />;
-          case "delimiter":
-            return <Delimiter key={block.id} />;
-          case "image":
-            return <Image key={block.id} data={block.data} />;
-        }
-      })}
+    <div
+      className="mx-auto w-full p-5 sm:w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12"
+      id="slugy"
+    >
+      <Output
+        renderers={{ delimiter: Delimiter }}
+        data={{ blocks }}
+        classNames=""
+      ></Output>
     </div>
   );
 }
