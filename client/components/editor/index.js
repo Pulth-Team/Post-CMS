@@ -7,7 +7,7 @@ export const EditorContainer = ({ editorRef, children, data, options }) => {
   const [editorInstance, setEditor] = useState(null);
 
   const [called, setCalled] = useState(1);
-  const { data, tools, holder, ...editorOptions } = options;
+  const { data, optTools, holder, ...editorOptions } = options;
   const isCreated = false;
   // initialize
   useEffect(() => {
@@ -24,7 +24,7 @@ export const EditorContainer = ({ editorRef, children, data, options }) => {
        * Available Tools list.
        * Pass Tool's class or Settings object for each Tool you want to use
        */
-      tools: tools,
+      tools: tools || optTools,
 
       /**
        * Previously saved data that should be rendered

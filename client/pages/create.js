@@ -11,12 +11,13 @@ const CustomEditor = dynamic(
 
 export default function CreatePage() {
   const [editorInstance, setEditorInstance] = useState({});
+  const [isReady, setIsReady] = useState(false);
   const handleInstance = (instance) => {
     setEditorInstance(instance);
   };
 
   return (
-    <div key="ContentEditoor">
+    <div key="ContentEditor">
       {CustomEditor && (
         <CustomEditor
           editorRef={setEditorInstance}
@@ -27,6 +28,7 @@ export default function CreatePage() {
              * onReady callback
              */
             onReady: () => {
+              setIsReady(true);
               console.count("READY callback");
             },
 
@@ -37,9 +39,18 @@ export default function CreatePage() {
               console.count("CHANGE callback");
             },
           }}
-          data={{}}
         ></CustomEditor>
       )}
+      <hr></hr>
+      <button
+        className="border p-2 rounded-md my-2"
+        disabled={!isReady}
+        onClick={async () => {
+          console.log(await editorInstance.save());
+        }}
+      >
+        Save
+      </button>
     </div>
   );
 }
