@@ -11,7 +11,8 @@ import useUser from "../../hooks/use-user";
 
 import Delimiter from "../../components/slug/delimiter";
 
-const Output = dynamic(() => import("editorjs-react-renderer"), { ssr: false });
+// const Output = dynamic(() => import("editorjs-react-renderer"), { ssr: false });
+const Output = dynamic(() => import("../../components/slug"), { ssr: false });
 // import Output from "";
 
 export default function SlugPage({ data }) {
@@ -24,11 +25,7 @@ export default function SlugPage({ data }) {
       className="mx-auto w-full p-5 sm:w-11/12 md:w-10/12 lg:w-9/12 xl:w-8/12"
       id="slugy"
     >
-      <Output
-        renderers={{ delimiter: Delimiter }}
-        data={{ blocks }}
-        classNames=""
-      ></Output>
+      <Output blocks={blocks}></Output>
     </div>
   );
 }

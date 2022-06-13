@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import EditorJS, { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
+import EditorJS from "@editorjs/editorjs";
 import { tools } from "./tools";
 import { resolveHref } from "next/dist/shared/lib/router/router";
 
@@ -68,15 +68,8 @@ export const EditorContainer = ({ editorRef, children, data, options }) => {
 
   return (
     <React.Fragment>
-      {!children && <div className="container" id="editor-js"></div>}
+      {!children && <div className="w-full" id="editor-js"></div>}
       {children}
-      <style jsx>{`
-        .container {
-          width: 100%;
-          border: 1px solid #c0c0c0;
-          padding: 2px 0;
-        }
-      `}</style>
     </React.Fragment>
   );
 };
