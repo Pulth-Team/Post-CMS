@@ -13,3 +13,17 @@ body {
 * {
   box-sizing: border-box;
 }
+.delimiter {
+  line-height: 1.6em;
+  width: 100%;
+  text-align: center;
+}
+
+.delimiter::before {
+  display: inline-block;
+  content: "***";
+  font-size: 30px;
+  line-height: 65px;
+  height: 30px;
+  letter-spacing: 0.2em;
+}

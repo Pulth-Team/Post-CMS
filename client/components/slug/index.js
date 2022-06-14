@@ -1,5 +1,7 @@
 import Header from "./header";
 import Paragraph from "./paragraph";
+import Delimiter from "./delimiter";
+import List from "./list";
 
 const OutputRenderer = ({ blocks }) => {
   console.log(blocks);
@@ -12,6 +14,13 @@ const OutputRenderer = ({ blocks }) => {
             return <Header key={block.id} data={block.data} />;
           case "paragraph":
             return <Paragraph key={block.id} data={block.data} />;
+          case "delimiter":
+            return <Delimiter key={block.id}></Delimiter>;
+          case "list":
+            return <List key={block.id} data={block.data}></List>;
+          default:
+            console.log(block.type);
+            break;
         }
       })}
     </div>

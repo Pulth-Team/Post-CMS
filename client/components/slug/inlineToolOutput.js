@@ -1,47 +1,86 @@
 import Link from "next/link";
+import { Fragment } from "react";
 
 //only work with <a> tag at the moment
 
-// export const calculateInner = (text) => {
-//   const tag_selector =
-//     /<([^>]*.*)(\s*)?>(.*?)<\s*\/\s*\1>|<([^>]*.*)(\s*)([A-Za-z][A-Za-z]*=".*[^]")>(.*?)<\s*\/\s*\4>/gi;
-//   const match = text.match(tag_selector);
-// };
+let matchTagName = (markup) => {
+  const pattern = /<([^\s>]+)(\s|>)+/;
+  return markup.match(pattern)[1];
+};
 
 export const calculateInner = (text) => {
-  const tagSelector = /<\s*a[^>]*>(.*?)<\s*\/\s*a>/gi;
-  const escapeSelector = /&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});/gi;
+  text = text.replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});/gi, "");
 
-  // deleting all html escapes
-  text = text.replace(escapeSelector, "");
+  const parentElementCount = text.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
+  const parents = text.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
 
-  //default calculated_inner equals to html-Escaped text
-  let returnVal = text;
+  let last_index = 0;
+  return parents
+    ? parents.map((parent, index) => {
+        const index = text.indexOf(parent);
+        const temp_index = last_index;
+        last_index = index + parent.length;
+        return (
+          <Fragment key={index}>
+            {text.slice(temp_index, index)}
+            {getElement(parent)}
+          </Fragment>
+        );
+      })
+    : text;
 
-  const match = text.match(tagSelector);
+  // return mapData;
+};
 
-  if (match) {
-    returnVal = match.map((tag) => {
-      const inner_text = tag.replace(/(<a href=".*.">|<\/a>)/g, "");
-      const href = tag.match(/\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/)[2];
+const getElement = (element) => {
+  const elementType = matchTagName(element);
 
-      const index = text.search(tag);
-      text = text.replace(tag, "");
-      const before_text = text.slice(0, index);
-      text = text.slice(index, text.length);
-
-      return (
-        <>
-          {before_text}
-          <Link href={href}>
-            <div className="underline inline-block cursor-pointer px-1">
-              {inner_text}
-            </div>
+  const inner_Data = element.replace(
+    /^<([^\s>]+)([^>]*)>|<\/([^\s>]+)([^>]*)>$/g,
+    ""
+  );
+  if (
+    !inner_Data.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g) ||
+    inner_Data.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g).length == 0
+  ) {
+    switch (elementType) {
+      case "a":
+        return (
+          <Link href="todo">
+            <a className="underline inline-block cursor-pointer px-1 ">
+              {inner_Data}
+            </a>
           </Link>
-        </>
-      );
-    });
-  }
+        );
+      case "b":
+        return <b className="font-bold">{inner_Data}</b>;
+      case "i":
+        return <i className="italic">{inner_Data}</i>;
+      case "code":
+        return (
+          <code className="bg-red-100 p-1 rounded m-1 text-red-700">
+            {inner_Data}
+          </code>
+        );
 
-  return returnVal;
+      case "script":
+        return;
+      default:
+        return text;
+    }
+  } else {
+    let last_index = 0;
+    return inner_Data
+      .match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g)
+      .map((parent, index) => {
+        const index = inner_Data.indexOf(parent);
+        const temp_index = last_index;
+        last_index = index + parent.length;
+        return (
+          <Fragment key={index}>
+            {inner_Data.slice(temp_index, index)} {getElement(parent)}
+          </Fragment>
+        );
+      });
+  }
 };
