@@ -4,8 +4,6 @@ import Delimiter from "./delimiter";
 import List from "./list";
 
 const OutputRenderer = ({ blocks }) => {
-  console.log(blocks);
-
   return (
     <div>
       {blocks.map((block) => {
@@ -19,7 +17,11 @@ const OutputRenderer = ({ blocks }) => {
           case "list":
             return <List key={block.id} data={block.data}></List>;
           default:
-            console.log(block.type);
+            console.log(
+              "Unsupported Block Type given (type:  '",
+              block.type,
+              "')"
+            );
             break;
         }
       })}

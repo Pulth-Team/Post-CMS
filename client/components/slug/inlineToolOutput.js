@@ -11,76 +11,113 @@ let matchTagName = (markup) => {
 export const calculateInner = (text) => {
   text = text.replace(/&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-fA-F]{1,6});/gi, "");
 
-  const parentElementCount = text.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
+  const parentElementCount = (text.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g) || [])
+    .length;
   const parents = text.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
 
-  let last_index = 0;
-  return parents
-    ? parents.map((parent, index) => {
-        const index = text.indexOf(parent);
-        const temp_index = last_index;
-        last_index = index + parent.length;
-        return (
-          <Fragment key={index}>
-            {text.slice(temp_index, index)}
-            {getElement(parent)}
-          </Fragment>
-        );
-      })
-    : text;
+  if (parentElementCount == 0) return text;
 
-  // return mapData;
+  let last_index = 0;
+  return parents.map((parent, elementIndex) => {
+    const index = text.indexOf(parent);
+    const temp_index = last_index;
+    last_index = index + parent.length;
+    const innerElement = calculateElement(parent);
+
+    console.log(elementIndex, parents.length - 1);
+    return (
+      <Fragment key={index}>
+        {text.slice(temp_index, index)} {innerElement}{" "}
+        {elementIndex == parents.length - 1
+          ? text.slice(last_index, text.length)
+          : ""}
+      </Fragment>
+    );
+  });
 };
 
-const getElement = (element) => {
-  const elementType = matchTagName(element);
-
-  const inner_Data = element.replace(
-    /^<([^\s>]+)([^>]*)>|<\/([^\s>]+)([^>]*)>$/g,
+const calculateElement = (element) => {
+  const type = matchTagName(element);
+  const innerData = element.replace(
+    /^\s*?<\2([^>]*)>|<\/([^\s>]+)([^>]*)>\s*?$/g,
     ""
   );
-  if (
-    !inner_Data.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g) ||
-    inner_Data.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g).length == 0
-  ) {
-    switch (elementType) {
+  const isContainsTag =
+    (innerData.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g) || []).length != 0;
+  if (element == `<i><b>dolor </b></i>in,`) console.log(isContainsTag);
+  if (!isContainsTag) {
+    switch (type) {
       case "a":
+        const href =
+          element.match(/<a\s+(?:[^>]*?\s+)?href=(["' ])(.*?)\1/)[2] || "";
         return (
-          <Link href="todo">
-            <a className="underline inline-block cursor-pointer px-1 ">
-              {inner_Data}
-            </a>
+          <Link href={href}>
+            <a className="underline">{innerData}</a>
           </Link>
         );
-      case "b":
-        return <b className="font-bold">{inner_Data}</b>;
-      case "i":
-        return <i className="italic">{inner_Data}</i>;
       case "code":
         return (
-          <code className="bg-red-100 p-1 rounded m-1 text-red-700">
-            {inner_Data}
+          <code className="bg-red-100 text-red-700 p-0.5 rounded ">
+            {" "}
+            {innerData}
           </code>
         );
-
-      case "script":
-        return;
+      case "i":
+        return <i className="italic">{innerData}</i>;
+      case "b":
+        return <b className="font-bold">{innerData}</b>;
       default:
-        return text;
+        console.log("unsupported inline type (type:'", type, "')");
+        return;
     }
   } else {
+    console.log(element);
+
+    const parents = innerData.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
+
     let last_index = 0;
-    return inner_Data
-      .match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g)
-      .map((parent, index) => {
-        const index = inner_Data.indexOf(parent);
-        const temp_index = last_index;
-        last_index = index + parent.length;
+    // parent = <i>ut pellentesque est sapien et risus. </i>
+    // elementIndex = 0
+    let innerParent = parents.map((parent, elementIndex) => {
+      const index = innerData.indexOf(parent);
+      console.log(index, element);
+      const temp_index = last_index;
+      last_index = index + parent.length;
+      const innerElement = calculateElement(parent);
+
+      console.log(elementIndex, parents.length - 1);
+      return (
+        <Fragment key={index}>
+          {innerData.slice(temp_index, index)} {innerElement}{" "}
+          {elementIndex == parents.length - 1
+            ? innerData.slice(last_index, innerData.length)
+            : ""}
+        </Fragment>
+      );
+    });
+    switch (type) {
+      case "a":
+        const href =
+          element.match(/<a\s+(?:[^>]*?\s+)?href=(["' ])(.*?)\1/)[2] || "";
         return (
-          <Fragment key={index}>
-            {inner_Data.slice(temp_index, index)} {getElement(parent)}
-          </Fragment>
+          <Link href={href}>
+            <a className="underline">{innerParent}</a>
+          </Link>
         );
-      });
+      case "code":
+        return (
+          <code className="bg-red-100 text-red-700 p-0.5 rounded ">
+            {" "}
+            {innerParent}
+          </code>
+        );
+      case "i":
+        return <i className="italic">{innerParent}</i>;
+      case "b":
+        return <b className="font-bold">{innerParent}</b>;
+      default:
+        console.log("unsupported inline type (type:'", type, "')");
+        return;
+    }
   }
 };

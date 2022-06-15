@@ -10,11 +10,7 @@ import redirect from "../../lib/redirect";
 
 import useUser from "../../hooks/use-user";
 
-import Delimiter from "../../components/slug/delimiter";
-
-// const Output = dynamic(() => import("editorjs-react-renderer"), { ssr: false });
 const Output = dynamic(() => import("../../components/slug"), { ssr: false });
-// import Output from "";
 
 export default function SlugPage({ data, error }) {
   const router = useRouter();
