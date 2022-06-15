@@ -1,10 +1,12 @@
-import express from "express";
+import mongoose from "mongoose";
+import { app } from "./app";
 
-const app = express();
+if (process.env.MONGO_URI) {
+  mongoose.connect(process.env.MONGO_URI);
+  console.log("Connected to Mongoose");
+} else throw new Error("MONGO_URI must be provided");
 
-app.all("*", (req, res) => {
-  res.send({});
-});
+if (!process.env.JWT_KEY) throw new Error("JWT_KEY must be provided");
 
 app.listen(4000, () => {
   console.log("API listening on port 4000");
