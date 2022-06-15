@@ -7,12 +7,9 @@ import useUser from "../hooks/use-user";
 const DashboardPage = () => {
   const { userData, loaded } = useUser();
 
-  if (loaded) {
-    console.log(userData);
+  if (loaded)
     return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
-  } else {
-    return <div> Loading ...</div>;
-  }
+  else return <div> Loading ...</div>;
 };
 
 DashboardPage.getLayout = (page) => {
