@@ -173,17 +173,19 @@ export default function Layout({ title, username, relatedTitle, children }) {
                 </Popover.Button>
 
                 <Popover.Panel className="w-16 h-16 absolute z-10 -translate-x-20">
-                  <div className="w-32 bg-neutral-200 shadow-md p-2 rounded flex flex-col">
-                    <div className="flex gap-2 items-center py-1">
+                  <div className="w-32 bg-neutral-200 shadow-md py-2 rounded flex flex-col">
+                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer">
                       <UserIcon className="w-6 h-6 "></UserIcon>
                       <p>Profile</p>
                     </div>
-                    <div className="flex gap-2 items-center py-1">
+                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer">
                       <CogIcon className="w-6 h-6 "></CogIcon>
-                      <p>Settings</p>
+                      <Link href="/settings">
+                        <p>Settings</p>
+                      </Link>
                     </div>
                     <div
-                      className="flex gap-2 items-center py-1"
+                      className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer"
                       onClick={async () => {
                         await axios.post("/api/auth/signout");
                         router.push("/");
