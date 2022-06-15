@@ -24,7 +24,6 @@ export const calculateInner = (text) => {
     last_index = index + parent.length;
     const innerElement = calculateElement(parent);
 
-    console.log(elementIndex, parents.length - 1);
     return (
       <Fragment key={index}>
         {text.slice(temp_index, index)} {innerElement}{" "}
@@ -44,7 +43,6 @@ const calculateElement = (element) => {
   );
   const isContainsTag =
     (innerData.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g) || []).length != 0;
-  if (element == `<i><b>dolor </b></i>in,`) console.log(isContainsTag);
   if (!isContainsTag) {
     switch (type) {
       case "a":
@@ -71,8 +69,6 @@ const calculateElement = (element) => {
         return;
     }
   } else {
-    console.log(element);
-
     const parents = innerData.match(/<([^\s>]+)([^>]*)>.*?<\/\1>/g);
 
     let last_index = 0;
@@ -80,12 +76,10 @@ const calculateElement = (element) => {
     // elementIndex = 0
     let innerParent = parents.map((parent, elementIndex) => {
       const index = innerData.indexOf(parent);
-      console.log(index, element);
       const temp_index = last_index;
       last_index = index + parent.length;
       const innerElement = calculateElement(parent);
 
-      console.log(elementIndex, parents.length - 1);
       return (
         <Fragment key={index}>
           {innerData.slice(temp_index, index)} {innerElement}{" "}

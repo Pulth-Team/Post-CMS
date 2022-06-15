@@ -38,15 +38,12 @@ export default function CreatePage() {
              */
             onReady: () => {
               setIsReady(true);
-              console.count("READY callback");
             },
 
             /**
              * onChange callback
              */
-            onChange: () => {
-              console.count("CHANGE callback");
-            },
+            onChange: () => {},
           }}
         ></CustomEditor>
       )}

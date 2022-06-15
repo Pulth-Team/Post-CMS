@@ -3,10 +3,6 @@ import { calculateInner } from "./inlineToolOutput";
 const Header = ({ data }) => {
   const { level, text } = data;
 
-  // const calculated_inner = calculateInner(text);
-
-  console.log(data);
-
   if (data.style === "unordered")
     return (
       <ul className="px-12 py-1.5 list-disc">

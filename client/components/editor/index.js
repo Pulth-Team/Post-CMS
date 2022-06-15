@@ -42,7 +42,6 @@ export const EditorContainer = ({ editorRef, children, data, options }) => {
     // cleanup
     return () => {
       new Promise(async (resolve, reject) => {
-        console.log("cleaned ", called);
         setCalled(called + 1);
 
         if (!isCreated) {
