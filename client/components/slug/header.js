@@ -1,27 +1,24 @@
-export default function Header({ text, level, id }) {
-  const style = "my-4";
-  const ParseLevel = () => {
-    switch (level) {
-      case 1:
-        return <h1 className={`text-5xl ${style}`}>{text}</h1>;
-        break;
-      case 2:
-        return <h2 className={`text-4xl ${style}`}>{text}</h2>;
-        break;
-      case 3:
-        return <h3 className={`text-3xl ${style}`}>{text}</h3>;
-        break;
-      case 4:
-        return <h4 className={`text-2xl ${style}`}>{text}</h4>;
-        break;
-      case 5:
-        return <h5 className={`text-xl ${style}`}>{text}</h5>;
-        break;
-      case 6:
-        return <h6 className={`text-lg ${style}`}>{text}</h6>;
-        break;
-    }
-  };
+import { calculateInner } from "./inlineToolOutput";
 
-  return ParseLevel();
-}
+const Header = ({ data }) => {
+  const { level, text } = data;
+
+  const calculated_inner = calculateInner(text);
+
+  switch (level) {
+    case 1:
+      return <h1 className="text-4xl p-2">{calculated_inner}</h1>;
+    case 2:
+      return <h2 className="text-3xl p-2">{calculated_inner}</h2>;
+    case 3:
+      return <h3 className="text-2xl p-2">{calculated_inner}</h3>;
+    case 4:
+      return <h4 className="text-xl p-2">{calculated_inner}</h4>;
+    case 5:
+      return <h5 className="text-lg p-2">{calculated_inner}</h5>;
+    case 6:
+      return <h6 className="text-base p-2">{calculated_inner}</h6>;
+  }
+};
+
+export default Header;

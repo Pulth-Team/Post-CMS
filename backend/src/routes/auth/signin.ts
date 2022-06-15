@@ -60,8 +60,6 @@ router.post(
       { expiresIn: "6h" }
     );
 
-    // TODO: remove cookie-session and implement our cookie strategy
-
     req.session = {
       jwt: userJwt,
     };

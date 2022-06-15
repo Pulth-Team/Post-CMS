@@ -87,7 +87,11 @@ router.post(
       blocks: req.body.blocks,
     });
     article.save();
-    res.send(req.currentUser);
+    res.send({
+      userId: req.currentUser!.id,
+      title: req.body.title,
+      slug,
+    });
   }
 );
 
