@@ -1,11 +1,9 @@
-import { MongoMemoryServer } from "mongodb-memory-server";
-import mongoose from "mongoose";
-
-let mongo: any;
+const mongoose = require("mongoose");
+const { MongoMemoryServer } = require("mongodb-memory-server");
+let mongod: any;
 beforeAll(async () => {
-  mongo = new MongoMemoryServer();
-  await mongo.start();
-  const mongoUri = await mongo.getUri();
+  mongod = await MongoMemoryServer.create();
+  const mongoUri = await mongod.getUri();
 
   await mongoose.connect(mongoUri);
 });
@@ -19,6 +17,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await mongo.stop();
+  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  await mongod.stop();
 });
