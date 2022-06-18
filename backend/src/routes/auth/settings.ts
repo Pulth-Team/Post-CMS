@@ -73,7 +73,7 @@ router.put(
 
     let newPasswordHashed;
     if (newPassword) {
-      newPasswordHashed = Password.toHash(newPassword);
+      newPasswordHashed = await Password.toHash(newPassword);
     }
     if (!(await Password.compare(userDoc.password, currentPassword)))
       throw new BadRequestError("Current Password Mismatch");
