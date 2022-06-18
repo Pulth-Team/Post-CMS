@@ -11,16 +11,6 @@ import { Article } from "../../models/article";
 
 const router = express.Router();
 
-/**
- *
- *  @required
- *  Authorization Cookie required
- *  Body
- *    @params {Number} version
- *    @params {ArticleBlock[]} blocks
- *    @params {String} title
- */
-
 //Make id for unique slug
 function makeid(length: Number) {
   var result = "";
@@ -33,6 +23,17 @@ function makeid(length: Number) {
   return result;
 }
 
+/**
+ *
+ *  @required
+ *  Authorization Cookie
+ *
+ *  Body
+ *    @params {Number} version
+ *    @params {ArticleBlock[]} blocks
+ *    @params {String} title
+ *
+ */
 router.post(
   "/api/article/create",
   [

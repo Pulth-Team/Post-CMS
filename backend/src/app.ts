@@ -14,6 +14,7 @@ import { signinRouter } from "./routes/auth/signin";
 import { signoutRouter } from "./routes/auth/signout";
 import { checkUserRouter } from "./routes/auth/check-user";
 import { currentUserRouter } from "./routes/auth/current";
+import { settingsRouter } from "./routes/auth/settings";
 
 import { articleCreateRouter } from "./routes/article/create";
 import { articleUserRouter } from "./routes/article/user";
@@ -45,6 +46,7 @@ app.use(signinRouter);
 app.use(signoutRouter);
 app.use(checkUserRouter);
 app.use(currentUserRouter);
+app.use(settingsRouter);
 
 // article Routes
 app.use(articleExploreRouter);

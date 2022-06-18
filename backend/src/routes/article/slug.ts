@@ -8,6 +8,12 @@ import { NotFoundError } from "../../errors/not-found-error";
 
 const router = express.Router();
 
+/**
+ *
+ *  URL Params
+ *    @params {String} slug
+ *
+ */
 router.get(
   "/api/article/:slug",
   [param("slug").isSlug().withMessage("Article name must be slug")],
