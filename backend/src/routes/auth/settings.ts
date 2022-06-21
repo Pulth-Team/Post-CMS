@@ -29,7 +29,14 @@ const router = express.Router();
  *    @params {String | null} newPassword
  *
  *  Response
- *
+ *    @status 200
+ *    @body {Object}
+ *      {
+ *        username: String,
+ *        email: String,
+ *        id: String,
+ *      }
+ *    @cookie Authorization Cookie
  */
 router.put(
   "/api/auth/settings",
@@ -65,25 +72,34 @@ router.put(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    // Get user Informations from the request
     const { username, email, newPassword, currentPassword } = req.body;
 
+    // Find user by id
     const userDoc = await User.findById(req.currentUser?.id);
 
+    // Check if user exists
     if (!userDoc) throw new NotAuthorizedError();
 
-    let newPasswordHashed;
-    if (newPassword) {
-      newPasswordHashed = await Password.toHash(newPassword);
-    }
+    // Check if current password is correct
     if (!(await Password.compare(userDoc.password, currentPassword)))
       throw new BadRequestError("Current Password Mismatch");
 
-    await userDoc.updateOne({
-      username,
-      email,
-      password: newPasswordHashed,
-    });
+    // Hash new password if provided
+    let newPasswordHashed: string | undefined;
+    if (newPassword) {
+      newPasswordHashed = await Password.toHash(newPassword);
+    }
 
+    // Update user informations if provided
+    if (username) userDoc.username = username;
+    if (email) userDoc.email = email;
+    if (newPassword) userDoc.password = newPasswordHashed!;
+
+    // Save user informations
+    await userDoc.save();
+
+    // Generate JWT
     const userJwt = await jwt.sign(
       {
         id: userDoc.id,
@@ -94,12 +110,12 @@ router.put(
       { expiresIn: "6h" }
     );
 
+    // set Cookie with JWT
     req.session = {
       jwt: userJwt,
     };
 
-    console.log(req.currentUser, userDoc);
-
+    // Send new user informations as response
     res.send(userDoc);
   }
 );
