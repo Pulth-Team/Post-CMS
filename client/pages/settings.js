@@ -16,9 +16,13 @@ const SettingPage = function () {
   const [usernameDisabled, setUsernameDisabled] = useState(true);
   const [passwordDisabled, setPasswordDisabled] = useState(true);
 
+  const [usernameValid, setUsernameValid] = useState(true);
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("password");
+  const [password, setPassword] = useState("passwordd");
   const [currentPassword, setCurrentPassword] = useState("");
 
   const [initialEmail, setInitialEmail] = useState("");
@@ -37,6 +41,22 @@ const SettingPage = function () {
 
   const sendData = async () => {
     setAlertEnabled(true);
+  };
+
+  const usernameBlurHandler = async (e) => {
+    if (username.length >= 4 && username.length <= 50) setUsernameValid(true);
+    else setUsernameValid(false);
+  };
+
+  const emailBlurHandler = async (e) => {
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const isValid = !!email.match(mailformat);
+    setEmailValid(isValid);
+  };
+
+  const passwordBlurHandler = (e) => {
+    if (password.length >= 8 && password.length <= 20) setPasswordValid(true);
+    else setPasswordValid(false);
   };
 
   useEffect(() => {
@@ -66,12 +86,22 @@ const SettingPage = function () {
           <div className="">
             <input
               onChange={usernameChangeHandler}
+              onBlur={usernameBlurHandler}
               className={`border-4 rounded-md p-2 w-full outline-none ${
-                username != initialUsername ? "border-yellow-200" : ""
+                !usernameValid ? "border-red-500" : ""
+              }${
+                usernameValid && username != initialUsername
+                  ? "border-yellow-200"
+                  : ""
               }`}
               disabled={usernameDisabled}
               value={username || ""}
             ></input>
+            <p className="italic text-red-700">
+              {usernameValid
+                ? ""
+                : "Username must be between 4 and 50 characters"}
+            </p>
           </div>
         </div>
         <div className="px-2">
@@ -89,12 +119,19 @@ const SettingPage = function () {
           <div className="">
             <input
               onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
               className={`border-4 rounded-md p-2 w-full outline-none ${
-                email != initialEmail ? "border-yellow-200" : ""
+                !emailValid ? "border-red-500" : ""
+              }${
+                emailValid && email != initialEmail ? "border-yellow-200" : ""
               }`}
               disabled={emailDisabled}
               value={email || ""}
+              type="email"
             ></input>
+            <p className="italic text-red-700">
+              {emailValid ? "" : "Email must be an valid email address"}
+            </p>
           </div>
         </div>
         <div className="px-2 py-4">
@@ -106,7 +143,7 @@ const SettingPage = function () {
                 if (passwordDisabled) {
                   setPassword("");
                 } else {
-                  setPassword("password");
+                  setPassword("passwordd");
                 }
 
                 setPasswordDisabled(!passwordDisabled);
@@ -118,8 +155,11 @@ const SettingPage = function () {
           <div className="">
             <input
               onChange={passwordChangeHandler}
+              onBlur={passwordBlurHandler}
               className={`border-4 rounded-md p-2 w-full outline-none ${
-                !passwordDisabled ? "border-yellow-200" : ""
+                !passwordValid ? "border-red-500" : ""
+              }${
+                passwordValid && !passwordDisabled ? "border-yellow-200" : ""
               }`}
               disabled={passwordDisabled}
               type="password"
@@ -132,6 +172,11 @@ const SettingPage = function () {
             ) : (
               ""
             )}
+            <p className="italic text-red-700">
+              {passwordValid
+                ? ""
+                : "Password must be between 8 and 20 characters"}
+            </p>
           </div>
         </div>
       </div>
@@ -169,14 +214,24 @@ const SettingPage = function () {
               <button
                 className="border-2 rounded-md p-2 border-indigo-500 bg-indigo-500 text-white"
                 onClick={async () => {
-                  const response = await axios.put("/api/auth/settings", {
-                    currentPassword,
-                    username:
-                      initialUsername != username ? username : undefined,
-                    email: initialEmail != email ? email : undefined,
-                    newPassword: !passwordDisabled ? password : undefined,
-                  });
+                  const response = await axios
+                    .put("/api/auth/settings", {
+                      currentPassword,
+                      username:
+                        initialUsername != username ? username : undefined,
+                      email: initialEmail != email ? email : undefined,
+                      newPassword: !passwordDisabled ? password : undefined,
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      return error.response.data;
+                    });
                   console.log(response);
+                  if (response.errors) {
+                    console.log("Kaydedilemedi");
+                  } else {
+                    setAlertEnabled(false);
+                  }
                 }}
               >
                 Update
@@ -189,9 +244,12 @@ const SettingPage = function () {
         <button
           className="border-2 rounded-md px-3 py-1.5 text-lg"
           disabled={
-            username == initialUsername &&
-            email == initialEmail &&
-            passwordDisabled
+            (username == initialUsername &&
+              email == initialEmail &&
+              passwordDisabled) ||
+            !usernameValid ||
+            !emailValid ||
+            !passwordValid
           }
           onClick={sendData}
         >
