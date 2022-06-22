@@ -32,7 +32,7 @@ interface ArticleModel extends mongoose.Model<ArticleDocument> {
 
 const articleSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   title: {
@@ -73,4 +73,4 @@ const Article = mongoose.model<ArticleDocument, ArticleModel>(
   articleSchema
 );
 
-export { Article };
+export { Article, ArticleAttrs };
