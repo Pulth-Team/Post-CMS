@@ -9,6 +9,8 @@ import { requireAuth } from "../../middlewares/require-auth";
 
 import { Article } from "../../models/article";
 
+import makeId from "../../services/make-id";
+
 const router = express.Router();
 
 /**
@@ -20,18 +22,6 @@ const router = express.Router();
  *    @params {ArticleBlock[]} blocks
  *    @params {String} title
  */
-
-//Make id for unique slug
-function makeid(length: Number) {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
 
 router.post(
   "/api/article/create",
@@ -77,7 +67,7 @@ router.post(
       strict: true,
     });
 
-    slug += "-" + makeid(4);
+    slug += "-" + makeId(4);
 
     const article = Article.build({
       userId: new mongoose.Types.ObjectId(req.currentUser!.id),
