@@ -23,7 +23,13 @@ interface ArticleAttrs {
  * Query result object has these values
  */
 interface ArticleDocument extends mongoose.Document {
-  build(attrs: ArticleAttrs): ArticleDocument;
+  userId: mongoose.Types.ObjectId;
+
+  title: String;
+  slug: String;
+
+  version: string;
+  blocks: ArticleBlock[];
 }
 
 interface ArticleModel extends mongoose.Model<ArticleDocument> {

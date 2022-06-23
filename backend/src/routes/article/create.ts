@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import slugify from "slugify";
 
 import { validateRequest } from "../../middlewares/validate-request";
@@ -14,6 +14,8 @@ import makeId from "../../services/make-id";
 const router = express.Router();
 
 /**
+ *  Method: POST
+ *  Path: /api/article/create
  *
  *  @required
  *  Authorization Cookie required
@@ -33,7 +35,7 @@ router.post(
       .withMessage("Title must be a string")
       .trim()
       .isLength({ min: 5, max: 50 })
-      .withMessage("Title can be up to 50 characters"),
+      .withMessage("Title must be between 5 and 50 characters"),
     body("version")
       .notEmpty()
       .withMessage("Version must be provided")
@@ -43,7 +45,7 @@ router.post(
       .notEmpty()
       .withMessage("Blocks must be provided")
       .isArray({ min: 1, max: 100 })
-      .withMessage("Artivle blocks must be between 1 to 100 elements"),
+      .withMessage("Article blocks must be between 1 to 100 elements"),
     body("blocks.*.id")
       .notEmpty()
       .withMessage("Block must provide id property"),
