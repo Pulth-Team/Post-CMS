@@ -1,6 +1,7 @@
 import Dashboard from "../../components/dashboard-layout";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 import { FolderAddIcon, PlusIcon } from "@heroicons/react/outline";
 
@@ -44,8 +45,21 @@ export default function CreatePage() {
   return (
     <div>
       {NoProjectComp}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
         {myArticles.length > 0 && ProjectList}
+
+        {myArticles.length > 0 && (
+          <Link href="/projects/create">
+            <div className="group border-2 rounded-md flex flex-col items-center justify-center border-dashed hover:border-solid active:bg-neutral-200 hover:border-indigo-500 p-5">
+              <div>
+                <p className="group-hover:text-indigo-500 flex items-center gap-1">
+                  <PlusIcon className="w-4 inline-block "></PlusIcon>Create
+                  Project
+                </p>
+              </div>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );

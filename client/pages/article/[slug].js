@@ -1,6 +1,5 @@
 import Dashboard from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
-import Error from "next/error";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { useEffect, useState } from "react";
