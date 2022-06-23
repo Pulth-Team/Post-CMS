@@ -10,6 +10,7 @@ import {
   UserIcon,
   LogoutIcon,
   BellIcon,
+  DocumentTextIcon,
 } from "@heroicons/react/outline";
 import { Popover } from "@headlessui/react";
 
@@ -31,9 +32,9 @@ export default function Layout({ title, username, relatedTitle, children }) {
     },
     {
       position: "up",
-      title: "Create New",
-      href: "/create",
-      icon: PlusCircleIcon,
+      title: "Projects",
+      href: "/projects",
+      icon: DocumentTextIcon,
     },
     {
       position: "down",
