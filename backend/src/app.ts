@@ -21,6 +21,7 @@ import { articleUserRouter } from "./routes/article/user";
 import { articleSlugRouter } from "./routes/article/slug";
 import { articleExploreRouter } from "./routes/article/explore";
 import { articleUploadImageRouter } from "./routes/article/upload-image";
+import { articleUpdateRouter } from "./routes/article/update";
 
 aws.config.region = "us-east-1";
 aws.config.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
@@ -58,6 +59,7 @@ app.use(articleCreateRouter);
 app.use(articleUserRouter);
 app.use(articleSlugRouter);
 app.use(articleUploadImageRouter);
+app.use(articleUpdateRouter);
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();
