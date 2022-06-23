@@ -26,6 +26,7 @@
     "axios": "^0.27.2",
     "editorjs-react-renderer": "^3.2.0",
     "js-cookie": "^3.0.1",
+    "moment": "^2.29.3",
     "next": "12.1.5",
     "next-cookies": "^2.0.3",
     "react": "18.0.0",
