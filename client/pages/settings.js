@@ -15,7 +15,7 @@ const SettingPage = function () {
   const [confirmEnabled, setConfirmEnabled] = useState(false);
   const [alertEnabled, setAlertEnabled] = useState(false);
 
-  const { userData, loaded } = useUser();
+  const { userData, loaded, setLoaded, setUserData } = useUser();
 
   const [emailDisabled, setEmailDisabled] = useState(true);
   const [usernameDisabled, setUsernameDisabled] = useState(true);
@@ -65,11 +65,20 @@ const SettingPage = function () {
   };
 
   useEffect(() => {
+    console.log("alertChanged");
+    axios
+      .get("/api/auth/current")
+      .then((response) => setUserData(response.data))
+      .catch((error) => error)
+      .finally(() => setLoaded(true));
+  }, [alertEnabled]);
+
+  useEffect(() => {
     setEmail(userData.email);
     setUsername(userData.username);
     setInitialUsername(userData.username);
     setInitialEmail(userData.email);
-  }, [loaded]);
+  }, [loaded, userData]);
 
   if (!loaded) return <div>Loading...</div>;
 
@@ -85,7 +94,7 @@ const SettingPage = function () {
           account settings.
         </div>
       </Alert>
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 md:container mx-auto">
+      <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 md:container mx-auto gap-x-1 gap-y-2">
         <div className="px-2">
           <div className="flex justify-between py-2 font-semibold w-full">
             <p>Username: </p>
@@ -149,7 +158,7 @@ const SettingPage = function () {
             </p>
           </div>
         </div>
-        <div className="px-2 py-4">
+        <div className="px-2">
           <div className="flex justify-between py-2 font-semibold w-full">
             <p>Password:</p>
             <a
@@ -241,7 +250,6 @@ const SettingPage = function () {
                       console.log(error);
                       return error.response.data;
                     });
-                  console.log(response);
                   if (response.errors) {
                     console.log("Kaydedilemedi");
                   } else {

@@ -13,7 +13,7 @@ function useUser() {
       .finally(() => setLoaded(true));
   }, []);
 
-  return { userData, loaded };
+  return { userData, loaded, setUserData, setLoaded };
 }
 
 export default useUser;
