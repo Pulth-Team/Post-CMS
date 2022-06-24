@@ -3,6 +3,9 @@ import useUser from "../hooks/use-user";
 import dynamic from "next/dynamic";
 import axios from "axios";
 
+import isAuthenticated from "../lib/isAuthenticated";
+import redirect from "../lib/redirect";
+
 import { useState } from "react";
 
 const CustomEditor = dynamic(
@@ -10,7 +13,7 @@ const CustomEditor = dynamic(
   { ssr: false }
 );
 
-export default function CreatePage() {
+const CreatePage = () => {
   const [editorInstance, setEditorInstance] = useState({});
   const [isReady, setIsReady] = useState(false);
 
@@ -76,7 +79,7 @@ export default function CreatePage() {
       </button>
     </div>
   );
-}
+};
 
 CreatePage.getLayout = function getLayout(page) {
   const { userData, loaded } = useUser();
@@ -87,3 +90,12 @@ CreatePage.getLayout = function getLayout(page) {
     </Dashboard>
   );
 };
+
+CreatePage.getInitialProps = async (ctx) => {
+  const isAuth = await isAuthenticated(ctx);
+  if (!isAuth) redirect("/login", ctx);
+
+  return { isAuth };
+};
+
+export default CreatePage;

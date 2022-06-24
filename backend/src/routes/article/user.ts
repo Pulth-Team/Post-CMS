@@ -8,8 +8,11 @@ import { Article } from "../../models/article";
 const router = express.Router();
 
 /**
+ *  URL Params
  *    @required
- *      {ObjectId} UserId
+ *    @params {ObjectId} UserId
+ *
+ *  Query
  *    @params {Number} skip
  *    @params {Number} limit
  */
