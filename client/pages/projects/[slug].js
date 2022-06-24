@@ -65,7 +65,6 @@ export default function EditPage({ data }) {
         className="border p-2 rounded-md my-2"
         disabled={!isReady}
         onClick={async () => {
-          // Todo update current document
           const savedData = await editorInstance.save();
           console.log(isChanged);
           const response = await axios.put("/api/article/update", {

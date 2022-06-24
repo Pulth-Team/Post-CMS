@@ -141,7 +141,10 @@ export default function Layout({ title, relatedTitle, children }) {
                     <div className=" flex flex-col py-2 bg-gray-50 rounded shadow-lg">
                       {MenuData.map((val) => {
                         return (
-                          <div className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer hover:font-semibold">
+                          <div
+                            className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer hover:font-semibold"
+                            key={val.title}
+                          >
                             <val.icon className="w-6"></val.icon>
                             <Link href={val.href} key={val.title + "-minimal"}>
                               <p>{val.title}</p>
