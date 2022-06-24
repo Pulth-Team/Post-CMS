@@ -23,6 +23,7 @@ const router = express.Router();
  *    @params {Number} version
  *    @params {ArticleBlock[]} blocks
  *    @params {String} title
+ *    @params {Date} time
  */
 
 router.post(
@@ -77,6 +78,7 @@ router.post(
       slug: slug,
       version: req.body.version,
       blocks: req.body.blocks,
+      time: req.body.time,
     });
     article.save();
     res.send({

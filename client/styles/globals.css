@@ -27,3 +27,38 @@ body {
   height: 30px;
   letter-spacing: 0.2em;
 }
+
+#slugy h1 {
+  font-size: 2.25rem /* 36px */;
+  line-height: 2.5rem /* 40px */;
+  padding: 0.5rem /* 8px */;
+}
+#slugy h2 {
+  font-size: 1.875rem /* 30px */;
+  line-height: 2.25rem /* 36px */;
+  padding: 0.5rem /* 8px */;
+}
+
+#slugy h3 {
+  font-size: 1.5rem /* 24px */;
+  line-height: 2rem /* 32px */;
+  padding: 0.5rem /* 8px */;
+}
+
+#slugy h4 {
+  font-size: 1.25rem /* 20px */;
+  line-height: 1.75rem /* 28px */;
+  padding: 0.5rem /* 8px */;
+}
+
+#slugy h5 {
+  font-size: 1.125rem /* 18px */;
+  line-height: 1.75rem /* 28px */;
+  padding: 0.5rem /* 8px */;
+}
+
+#slugy h6 {
+  font-size: 1rem /* 16px */;
+  line-height: 1.5rem /* 24px */;
+  padding: 0.5rem /* 8px */;
+}
