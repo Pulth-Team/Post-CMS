@@ -32,10 +32,12 @@ export default function CreatePage() {
         <h1 className="font-medium">No projects</h1>
         <p className="text-slate-500">Get started by creating a new project.</p>
       </div>
-      <button className="bg-indigo-500 text-white p-2 active:bg-indigo-600 rounded-md my-2 text-sm  flex items-center gap-2">
-        <PlusIcon className="w-4 inline-block "></PlusIcon>
-        New Project
-      </button>
+      <Link href="/projects/create">
+        <button className="bg-indigo-500 text-white p-2 active:bg-indigo-600 rounded-md my-2 text-sm  flex items-center gap-2">
+          <PlusIcon className="w-4 inline-block "></PlusIcon>
+          New Project
+        </button>
+      </Link>
     </div>
   );
 
