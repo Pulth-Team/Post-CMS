@@ -22,13 +22,15 @@ export default function EditPage({ data }) {
 
   const [editorInstance, setEditorInstance] = useState({});
   const [isReady, setIsReady] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
 
   return (
     <div key="ContentEditor" id="slugy">
       <div className="mb-3 pt-0">
         <input
           type="text"
-          onChange={(event) => setTitle(event.target.value)}
+          value={title}
+          disabled
           placeholder="Title"
           className="px-3 py-4 placeholder-slate-300 text-slate-600 relative bg-white rounded text-base border-0 shadow outline-none focus:outline-none focus:ring w-full"
         />
@@ -50,7 +52,11 @@ export default function EditPage({ data }) {
             /**
              * onChange callback
              */
-            onChange: () => {},
+            onChange: () => {
+              setIsChanged(true);
+              console.log("changed");
+              console.log(isChanged);
+            },
           }}
         ></CustomEditor>
       )}
@@ -59,18 +65,14 @@ export default function EditPage({ data }) {
         className="border p-2 rounded-md my-2"
         disabled={!isReady}
         onClick={async () => {
-          // const savedata = await editorInstance.save();
-          // delete savedata.time;
-          // savedata.title = title;
-          // const response = await axios.post("/api/article/create", {
-          //   title,
-          //   version: savedata.version,
-          //   blocks: savedata.blocks,
-          //   time: new Date(),
-          // });
-          // console.log(savedata);
-          //
           // Todo update current document
+          const savedData = await editorInstance.save();
+          console.log(isChanged);
+          const response = await axios.put("/api/article/update", {
+            slug,
+            blocks: isChanged ? savedData.blocks : undefined,
+          });
+          console.log(response);
         }}
       >
         Save

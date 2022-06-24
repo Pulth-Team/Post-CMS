@@ -63,7 +63,7 @@ const articleSchema = new mongoose.Schema({
       {
         id: { type: String, required: true },
         type: { type: String, required: true },
-        data: { type: Object, required: true },
+        data: { type: Object },
       },
     ],
     required: true,

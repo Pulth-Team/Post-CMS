@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { body } from "express-validator";
+import { body, oneOf } from "express-validator";
 import mongoose from "mongoose";
 import slugify from "slugify";
 
@@ -71,10 +71,12 @@ router.put(
   currentUser,
   requireAuth,
   async (req: Request, res: Response) => {
+    //TODO check is there any change in the article (in the validation section)
+
     const { slug, version, title, blocks } = req.body;
 
     const article = await Article.findOne({ slug });
-    console.log(article);
+
     if (!article) throw new NotFoundError();
 
     if (version) article.version = version;
@@ -92,6 +94,8 @@ router.put(
     }
 
     await article.save();
+
+    res.status(200).send(article);
   }
 );
 
