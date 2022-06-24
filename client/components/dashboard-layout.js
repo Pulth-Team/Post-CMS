@@ -60,7 +60,7 @@ export default function Layout({ title, relatedTitle, children }) {
   return (
     <div>
       <div className="flex w-full h-screen">
-        <div className="sm:flex sm:w-48 pt-16 flex-col hidden sm:flex-shrink-0 sm:flex-grow-0 bg-neutral-600 justify-between">
+        <div className="sm:flex sm:w-48 pt-16 flex-col hidden sm:flex-shrink-0 sm:flex-grow-0 bg-gray-800 justify-between p-2">
           <div>
             {MenuData.map((val) => {
               if (val.position == "up")
@@ -69,7 +69,7 @@ export default function Layout({ title, relatedTitle, children }) {
                     <div
                       className={
                         router.asPath == val.href || val.title == relatedTitle
-                          ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                          ? "bg-gray-900 text-gray-300 flex px-3 py-2 gap-2 items-center rounded-md"
                           : "text-gray-300 flex px-3 py-2 gap-2 items-center cursor-pointer"
                       }
                     >
@@ -103,7 +103,7 @@ export default function Layout({ title, relatedTitle, children }) {
                     <div
                       className={
                         router.asPath == val.href || val.title == relatedTitle
-                          ? "bg-neutral-500 text-gray-300 flex px-3 py-2 gap-2 items-center"
+                          ? "bg-gray-900 text-gray-300 flex px-3 py-2 gap-2 items-center rounded-md"
                           : "text-gray-300 flex px-3 py-2 gap-2 items-center cursor-pointer"
                       }
                     >
@@ -130,23 +130,22 @@ export default function Layout({ title, relatedTitle, children }) {
           </div>
         </div>
         <div className="w-full flex flex-col">
-          <div className="w-full h-16 bg-neutral-300 flex items-center p-4 justify-between">
+          <div className="w-full h-16 bg-white shadow flex items-center p-4 justify-between">
             <div className="text-lg font-mono flex items-center gap-x-2 flex-shrink w-min">
               <div className="sm:hidden">
                 <Popover className="h-8">
                   <Popover.Button>
                     <MenuIcon className="w-8 h-8"></MenuIcon>
                   </Popover.Button>
-                  <Popover.Panel>
-                    <div className="absolute flex flex-col p-4 bg-neutral-200 rounded">
+                  <Popover.Panel className="absolute z-10">
+                    <div className=" flex flex-col py-2 bg-gray-50 rounded shadow-lg">
                       {MenuData.map((val) => {
                         return (
-                          <div
-                            className="flex gap-2 items-center"
-                            key={val.title}
-                          >
-                            <val.icon className="w-6 h-6"></val.icon>
-                            <p>{val.title}</p>
+                          <div className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer hover:font-semibold">
+                            <val.icon className="w-6"></val.icon>
+                            <Link href={val.href} key={val.title + "-minimal"}>
+                              <p>{val.title}</p>
+                            </Link>
                           </div>
                         );
                       })}
@@ -178,20 +177,20 @@ export default function Layout({ title, relatedTitle, children }) {
                   />
                 </Popover.Button>
 
-                <Popover.Panel className="w-16 h-16 absolute z-10 -translate-x-20">
-                  <div className="w-32 bg-neutral-200 shadow-md py-2 rounded flex flex-col">
-                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer">
+                <Popover.Panel className="absolute z-10 -translate-x-20">
+                  <div className="w-32 bg-gray-50 shadow-lg py-2 rounded flex flex-col">
+                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer hover:font-semibold">
                       <UserIcon className="w-6 h-6 "></UserIcon>
                       <p>Profile</p>
                     </div>
-                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer">
+                    <div className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer  hover:font-semibold">
                       <CogIcon className="w-6 h-6 "></CogIcon>
                       <Link href="/settings">
                         <p>Settings</p>
                       </Link>
                     </div>
                     <div
-                      className="flex gap-2 items-center p-1 px-2 hover:bg-neutral-300 cursor-pointer"
+                      className="flex gap-2 items-center p-1 px-2 hover:bg-gray-200 cursor-pointer  hover:font-semibold"
                       onClick={async () => {
                         await axios.post("/api/auth/signout");
                         router.push("/");
