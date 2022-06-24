@@ -4,12 +4,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Dialog } from "@headlessui/react";
+import { CheckIcon } from "@heroicons/react/outline";
 
 import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
 
+import Alert from "../components/alert";
+
 const SettingPage = function () {
+  const [confirmEnabled, setConfirmEnabled] = useState(false);
   const [alertEnabled, setAlertEnabled] = useState(false);
+
   const { userData, loaded } = useUser();
 
   const [emailDisabled, setEmailDisabled] = useState(true);
@@ -40,7 +45,7 @@ const SettingPage = function () {
   };
 
   const sendData = async () => {
-    setAlertEnabled(true);
+    setConfirmEnabled(true);
   };
 
   const usernameBlurHandler = async (e) => {
@@ -70,6 +75,16 @@ const SettingPage = function () {
 
   return (
     <div>
+      <Alert
+        open={alertEnabled}
+        handle={setAlertEnabled}
+        className="bg-green-100 border-green-400 text-green-700"
+      >
+        <div className="flex justify-center items-center ">
+          <CheckIcon className="w-8"></CheckIcon> Successfully updated your
+          account settings.
+        </div>
+      </Alert>
       <div className="p-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 md:container mx-auto">
         <div className="px-2">
           <div className="flex justify-between py-2 font-semibold w-full">
@@ -182,8 +197,8 @@ const SettingPage = function () {
       </div>
       <Dialog
         className="relative z-10"
-        open={alertEnabled}
-        onClose={() => setAlertEnabled(false)}
+        open={confirmEnabled}
+        onClose={() => setConfirmEnabled(false)}
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed flex items-center justify-center inset-0">
@@ -207,7 +222,7 @@ const SettingPage = function () {
             <div className="flex justify-end p-2 gap-2">
               <button
                 className="border-2 rounded-md p-2 border-indigo-500 text-black"
-                onClick={() => setAlertEnabled(false)}
+                onClick={() => setConfirmEnabled(false)}
               >
                 Cancel
               </button>
@@ -230,7 +245,8 @@ const SettingPage = function () {
                   if (response.errors) {
                     console.log("Kaydedilemedi");
                   } else {
-                    setAlertEnabled(false);
+                    setConfirmEnabled(false);
+                    setAlertEnabled(true);
                   }
                 }}
               >

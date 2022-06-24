@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useState, useEffect, Fragment } from "react";
 
-const Alert = ({ open, handle, children }) => {
+const Alert = ({ open, handle, children, className }) => {
   useEffect(() => {
     const time = setTimeout(() => {
       handle(false);
@@ -24,7 +24,9 @@ const Alert = ({ open, handle, children }) => {
             leaveFrom=""
             leaveTo="-translate-y-full"
           >
-            <Dialog.Panel className="mx-auto bg-white rounded-b-lg h-auto p-2 border-x-2 border-b-2 shadow-lg select-none">
+            <Dialog.Panel
+              className={`mx-auto bg-white rounded-b-lg h-auto p-2 border-x-2 border-b-2 shadow-lg select-none ${className} `}
+            >
               {children}
             </Dialog.Panel>
           </Transition.Child>
