@@ -28,7 +28,7 @@ router.post(
       .trim()
       .notEmpty()
       .withMessage("You must supply a password to sign in")
-      .isLength({ min: 8, max: 20 })
+      .isLength({ min: 8, max: 50 })
       .withMessage(
         "Password must be at least 8 characters at most 20 characters"
       ),

@@ -59,7 +59,7 @@ router.put(
       .optional()
       .isString()
       .withMessage("must be a string")
-      .isLength({ min: 8, max: 20 })
+      .isLength({ min: 8, max: 50 })
       .withMessage("must be between 4-50 charecters"),
     oneOf(
       [
