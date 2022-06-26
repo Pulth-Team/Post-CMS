@@ -10,6 +10,24 @@ import { Password } from "../../services/password";
 
 const router = express.Router();
 
+/**
+ *  @url /api/auth/signin
+ *  @method POST
+ *  @description Sign in a user and generates a JWT token (Authentication Token)
+ *
+ *  @headers Authorization Token (JWT)
+ *
+ *  @body
+ *    @param {string} username
+ *    @param {string} email
+ *    @param {string} password
+ *
+ *  @returns {object}
+ *    @param {string} id
+ *    @param {string} username
+ *    @param {string} email
+ *
+ */
 router.post(
   "/api/auth/signin",
   [
@@ -68,8 +86,6 @@ router.post(
       id: existingUser._id,
       email: existingUser.email,
       username: existingUser.username,
-
-      token: userJwt,
     });
   }
 );
