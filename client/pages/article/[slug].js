@@ -26,17 +26,14 @@ export default function SlugPage({ data, error }) {
 }
 
 SlugPage.getLayout = function getLayout(page) {
-  const context = useContext(AppContext);
   if (page.props.error || page.props.errorData) {
     console.log("error", page.props.error);
     console.log("error Response Data", page.props.errorData);
   }
   return !page.props.error ? (
-    <Dashboard title={page.props.data.title} username={userData.username}>
-      {page}
-    </Dashboard>
+    <Dashboard title={page.props.data.title}>{page}</Dashboard>
   ) : (
-    <Dashboard title="Error Happened" username={userData.username}>
+    <Dashboard title="Error Happened">
       <p className="bg-red-400 rounded-md text-black p-2 text-xl">
         Error Happened during getting article information from backend
       </p>

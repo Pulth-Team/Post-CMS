@@ -1,6 +1,6 @@
 import Dashboard from "../components/dashboard-layout";
 import useUser from "../hooks/use-user";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import { Dialog } from "@headlessui/react";
@@ -10,12 +10,14 @@ import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
 
 import Alert from "../components/alert";
+import AppContext from "../contexts/app";
 
 const SettingPage = function () {
   const [confirmEnabled, setConfirmEnabled] = useState(false);
   const [alertEnabled, setAlertEnabled] = useState(false);
 
-  const { userData, loaded, setLoaded, setUserData } = useUser();
+  // const { userData, loaded, setLoaded, setUserData } = useUser();
+  const { userData, setUserData } = useContext(AppContext);
 
   const [emailDisabled, setEmailDisabled] = useState(true);
   const [usernameDisabled, setUsernameDisabled] = useState(true);
@@ -32,6 +34,21 @@ const SettingPage = function () {
 
   const [initialEmail, setInitialEmail] = useState("");
   const [initialUsername, setInitialUsername] = useState("");
+
+  useEffect(() => {
+    console.log("alertChanged");
+    axios
+      .get("/api/auth/current")
+      .then((response) => setUserData(response.data))
+      .catch((error) => error);
+  }, [alertEnabled]);
+
+  useEffect(() => {
+    setEmail(userData.email);
+    setUsername(userData.username);
+    setInitialUsername(userData.username);
+    setInitialEmail(userData.email);
+  }, [userData]);
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -63,24 +80,6 @@ const SettingPage = function () {
     if (password.length >= 8 && password.length <= 20) setPasswordValid(true);
     else setPasswordValid(false);
   };
-
-  useEffect(() => {
-    console.log("alertChanged");
-    axios
-      .get("/api/auth/current")
-      .then((response) => setUserData(response.data))
-      .catch((error) => error)
-      .finally(() => setLoaded(true));
-  }, [alertEnabled]);
-
-  useEffect(() => {
-    setEmail(userData.email);
-    setUsername(userData.username);
-    setInitialUsername(userData.username);
-    setInitialEmail(userData.email);
-  }, [loaded, userData]);
-
-  if (!loaded) return <div>Loading...</div>;
 
   return (
     <div>
