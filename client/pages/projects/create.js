@@ -1,5 +1,4 @@
 import Dashboard from "../../components/dashboard-layout";
-import useUser from "../../hooks/use-user";
 import dynamic from "next/dynamic";
 import axios from "axios";
 
@@ -81,11 +80,5 @@ export default function CreatePage() {
 }
 
 CreatePage.getLayout = function getLayout(page) {
-  const { userData, loaded } = useUser();
-
-  return (
-    <Dashboard title="Create New" username={userData.username}>
-      {page}
-    </Dashboard>
-  );
+  return <Dashboard title="Create New">{page}</Dashboard>;
 };

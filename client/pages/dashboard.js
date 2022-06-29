@@ -1,20 +1,20 @@
 import Dashboard from "../components/dashboard-layout";
 
+import AppContext from "../contexts/app";
+import { useContext } from "react";
+
 import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
-import useUser from "../hooks/use-user";
 
 const DashboardPage = () => {
-  const { userData, loaded } = useUser();
+  const { userData } = useContext(AppContext);
 
-  if (loaded)
-    return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
-  else return <div> Loading ...</div>;
+  console.log(userData);
+  return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
 };
 
 DashboardPage.getLayout = (page) => {
-  const { userData, loaded } = useUser();
-
+  const { userData } = useContext(AppContext);
   return (
     <Dashboard title="Home Page" username={userData.username}>
       {page}

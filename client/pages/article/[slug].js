@@ -2,12 +2,11 @@ import Dashboard from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import AppContext from "../../contexts/App";
+import { useEffect, useState, useContext } from "react";
 
 import isAuthenticated from "../../lib/isAuthenticated";
 import redirect from "../../lib/redirect";
-
-import useUser from "../../hooks/use-user";
 
 const Output = dynamic(() => import("../../components/slug"), { ssr: false });
 
@@ -27,7 +26,7 @@ export default function SlugPage({ data, error }) {
 }
 
 SlugPage.getLayout = function getLayout(page) {
-  const { userData, loaded } = useUser();
+  const context = useContext(AppContext);
   if (page.props.error || page.props.errorData) {
     console.log("error", page.props.error);
     console.log("error Response Data", page.props.errorData);

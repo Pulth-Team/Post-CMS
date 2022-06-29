@@ -285,13 +285,7 @@ const SettingPage = function () {
 };
 
 SettingPage.getLayout = (page) => {
-  const { userData, loaded } = useUser();
-
-  return (
-    <Dashboard title="Settings" username={userData.username}>
-      {page}
-    </Dashboard>
-  );
+  return <Dashboard title="Settings">{page}</Dashboard>;
 };
 
 SettingPage.getInitialProps = async (ctx) => {

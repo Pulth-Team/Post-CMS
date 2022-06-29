@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 
+import AppContext from "../contexts/app";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -14,6 +16,8 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const router = useRouter();
+
+  const { setUserData } = useContext(AppContext);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -37,6 +41,8 @@ export default function Login() {
         }
       });
     if (response !== false) {
+      console.log(response);
+      setUserData(response.data);
       router.push("/dashboard");
     }
   };

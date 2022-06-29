@@ -14,9 +14,11 @@ import {
 } from "@heroicons/react/outline";
 import { Popover } from "@headlessui/react";
 
+import AppContext from "../contexts/app";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 
-export default function Layout({ title, username, relatedTitle, children }) {
+export default function Layout({ title, relatedTitle, children }) {
   const MenuData = [
     {
       position: "up",
@@ -51,6 +53,9 @@ export default function Layout({ title, username, relatedTitle, children }) {
   const largeTitle = title.slice(0, 60) + (titleLen > 60 ? "…" : "");
 
   const router = useRouter();
+
+  const Context = useContext(AppContext);
+  const username = Context.userData.username;
 
   return (
     <div>

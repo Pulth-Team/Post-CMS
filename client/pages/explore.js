@@ -28,13 +28,7 @@ export default function ExplorePage({ data }) {
 }
 
 ExplorePage.getLayout = function getLayout(page) {
-  const { userData, loaded } = useUser({});
-
-  return (
-    <Dashboard title="Explore" username={userData.username}>
-      {page}
-    </Dashboard>
-  );
+  return <Dashboard title="Explore">{page}</Dashboard>;
 };
 
 ExplorePage.getInitialProps = async (ctx) => {

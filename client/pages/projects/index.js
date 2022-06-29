@@ -1,16 +1,17 @@
 import Dashboard from "../../components/dashboard-layout";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 
 import { FolderAddIcon, PlusIcon } from "@heroicons/react/outline";
 
-import useUser from "../../hooks/use-user";
+import AppContext from "../../contexts/app";
 
 import ProjectCard from "../../components/project-card";
 
 export default function CreatePage() {
-  const { userData, loaded } = useUser();
+  const { userData } = useContext(AppContext);
+  //   const { userData, loaded } = useUser();
   const [myArticles, setMyArticles] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function CreatePage() {
       }
     }
     fetchData();
-  }, [loaded]);
+  }, []);
 
   const NoProjectComp = myArticles.length == 0 && (
     <div className="flex flex-col items-center">
@@ -66,11 +67,5 @@ export default function CreatePage() {
 }
 
 CreatePage.getLayout = function getLayout(page) {
-  const { userData, loaded } = useUser();
-
-  return (
-    <Dashboard title="Projects" username={userData.username}>
-      {page}
-    </Dashboard>
-  );
+  return <Dashboard title="Projects">{page}</Dashboard>;
 };
