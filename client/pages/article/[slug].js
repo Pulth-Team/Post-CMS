@@ -2,7 +2,7 @@ import Dashboard from "../../components/dashboard-layout";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import AppContext from "../../contexts/App";
+import AppContext from "../../contexts/app";
 import { useEffect, useState, useContext } from "react";
 
 import isAuthenticated from "../../lib/isAuthenticated";

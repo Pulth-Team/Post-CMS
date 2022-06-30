@@ -11,6 +11,7 @@ import { Article } from "../../models/article";
 import { NotFoundError } from "../../errors/not-found-error";
 
 import makeId from "../../services/make-id";
+import { NotAuthorizedError } from "../../errors/not-authorized-error";
 
 const router = express.Router();
 
@@ -77,6 +78,7 @@ router.put(
 
     const article = await Article.findOne({ slug });
 
+    if (article?.userId !== req.currentUser?.id) throw new NotAuthorizedError();
     if (!article) throw new NotFoundError();
 
     if (version) article.version = version;
