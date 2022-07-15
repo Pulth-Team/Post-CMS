@@ -85,16 +85,10 @@ router.put(
     if (!(await Password.compare(userDoc.password, currentPassword)))
       throw new BadRequestError("Current Password Mismatch");
 
-    // Hash new password if provided
-    let newPasswordHashed: string | undefined;
-    if (newPassword) {
-      newPasswordHashed = await Password.toHash(newPassword);
-    }
-
     // Update user informations if provided
     if (username) userDoc.username = username;
     if (email) userDoc.email = email;
-    if (newPassword) userDoc.password = newPasswordHashed!;
+    if (newPassword) userDoc.password = newPassword;
 
     // Save user informations
     await userDoc.save();
