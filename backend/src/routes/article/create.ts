@@ -24,6 +24,13 @@ const router = express.Router();
  *    @params {ArticleBlock[]} blocks
  *    @params {String} title
  *    @params {Date} time
+ * 
+ *  Types
+ *    ArticleBlock {
+ *      id: string;
+ *      type: string;
+ *      data: any;
+ *    }
  */
 
 router.post(
