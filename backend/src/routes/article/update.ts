@@ -76,9 +76,9 @@ router.put(
 
     const { slug, version, title, blocks } = req.body;
 
-    const article = await Article.findOne({ slug });
-
-    if (article?.userId !== req.currentUser?.id) throw new NotAuthorizedError();
+    const article = await Article.findOne({ slug }).select("userId");
+    
+    if (article?.userId != req.currentUser?.id) throw new NotAuthorizedError();
     if (!article) throw new NotFoundError();
 
     if (version) article.version = version;
