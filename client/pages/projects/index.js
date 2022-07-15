@@ -1,30 +1,18 @@
 import Dashboard from "../../components/dashboard-layout";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { FolderAddIcon, PlusIcon } from "@heroicons/react/outline";
 
-import AppContext from "../../contexts/app";
-
 import ProjectCard from "../../components/project-card";
 
-export default function CreatePage() {
-  const { userData } = useContext(AppContext);
+import { Dialog } from "@headlessui/react";
+
+export default function ProjectsPage({ myArticles }) {
   //   const { userData, loaded } = useUser();
-  const [myArticles, setMyArticles] = useState([]);
 
-  useEffect(() => {
-    async function fetchData() {
-      if (userData.id) {
-        const response = await axios.get("/api/article/user/" + userData.id);
-
-        console.log(response);
-        setMyArticles(response.data);
-      }
-    }
-    fetchData();
-  }, []);
+  let [isOpen, setOpen] = useState(false);
 
   const NoProjectComp = myArticles.length == 0 && (
     <div className="flex flex-col items-center">
@@ -52,7 +40,7 @@ export default function CreatePage() {
         {myArticles.length > 0 && ProjectList}
 
         {myArticles.length > 0 && (
-          <Link href="/projects/create">
+          <div onClick={() => setOpen(true)}>
             <div className="group border-2 rounded-md flex flex-col items-center justify-center border-dashed hover:border-solid active:bg-neutral-200 hover:border-indigo-500 p-5">
               <div>
                 <p className="group-hover:text-indigo-500 flex items-center gap-1">
@@ -61,13 +49,37 @@ export default function CreatePage() {
                 </p>
               </div>
             </div>
-          </Link>
+          </div>
         )}
       </div>
+      <Dialog
+        className="fixed inset-0"
+        open={isOpen}
+        onClose={() => setOpen(false)}
+      >
+        <Dialog.Panel>
+          <Dialog.Title>Create Project</Dialog.Title>
+          <Dialog.Description>Proje açıyon he haberin olsun</Dialog.Description>
+          <p>Osuurk</p>
+        </Dialog.Panel>
+      </Dialog>
     </div>
   );
 }
 
-CreatePage.getLayout = function getLayout(page) {
+ProjectsPage.getLayout = function getLayout(page) {
   return <Dashboard title="Projects">{page}</Dashboard>;
+};
+ProjectsPage.getInitialProps = async (ctx) => {
+  var session = ctx.req.cookies.session;
+  var cookieValue = Buffer.from(session, "base64").toString();
+  var cookieJSON = JSON.parse(cookieValue);
+  var userDataBase64 = cookieJSON.jwt.split(".")[1];
+  var userDataValue = Buffer.from(userDataBase64, "base64").toString();
+  var userDataJSON = JSON.parse(userDataValue);
+
+  const response = await axios.get("/api/article/user/" + userDataJSON.id);
+  console.log(userDataJSON);
+
+  return { myArticles: response.data || [] };
 };
