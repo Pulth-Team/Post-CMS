@@ -46,7 +46,7 @@ router.post(
     body("time")
       .notEmpty()
       .withMessage("Time must be provided")
-      .isNumeric()
+      .isNumeric() //TODO 24 Horus Limit
       .withMessage("Time must be in date format"),
     body("blocks")
       .isArray({ max: 100 })
