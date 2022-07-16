@@ -15,7 +15,6 @@ interface ArticleAttrs {
   title: string;
   slug: string;
 
-  version: string;
   blocks: ArticleBlock[];
 }
 
@@ -28,7 +27,6 @@ interface ArticleDocument extends mongoose.Document {
   title: string;
   slug: string;
 
-  version: string;
   blocks: ArticleBlock[];
 }
 
@@ -52,10 +50,6 @@ const articleSchema = new mongoose.Schema({
   },
   time: {
     type: Date,
-    required: true,
-  },
-  version: {
-    type: String,
     required: true,
   },
   blocks: {

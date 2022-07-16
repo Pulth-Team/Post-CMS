@@ -25,7 +25,6 @@ const router = express.Router();
  *  Body
  *    @required
  *    @params {String} slug
- *    @params {Number | null} version
  *    @params {ArticleBlock[] | null} blocks
  *    @params {String | null} title
  *
@@ -34,12 +33,6 @@ router.put(
   "/api/article/update",
   [
     body("slug").isSlug().withMessage("Slug must be a valid slug"),
-    body("version")
-      .optional()
-      .notEmpty()
-      .withMessage("Version must be provided")
-      .isString()
-      .withMessage("Version must be a string"),
     body("title")
       .optional()
       .isString()
@@ -81,7 +74,6 @@ router.put(
     if (article?.userId != req.currentUser?.id) throw new NotAuthorizedError();
     if (!article) throw new NotFoundError();
 
-    if (version) article.version = version;
     if (blocks) article.blocks = blocks;
 
     if (title) {

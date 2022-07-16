@@ -20,11 +20,10 @@ const router = express.Router();
  *  @required
  *  Authorization Cookie required
  *  Body
- *    @params {Number} version
  *    @params {ArticleBlock[]} blocks
  *    @params {String} title
  *    @params {Date} time
- * 
+ *
  *  Types
  *    ArticleBlock {
  *      id: string;
@@ -44,15 +43,13 @@ router.post(
       .trim()
       .isLength({ min: 5, max: 50 })
       .withMessage("Title must be between 5 and 50 characters"),
-    body("version")
+    body("time")
       .notEmpty()
-      .withMessage("Version must be provided")
-      .isString()
-      .withMessage("Version must be a version string"),
+      .withMessage("Time must be provided")
+      .isNumeric()
+      .withMessage("Time must be in date format"),
     body("blocks")
-      .notEmpty()
-      .withMessage("Blocks must be provided")
-      .isArray({ min: 1, max: 100 })
+      .isArray({ max: 100 })
       .withMessage("Article blocks must be between 1 to 100 elements"),
     body("blocks.*.id")
       .notEmpty()
@@ -78,12 +75,11 @@ router.post(
     });
 
     slug += "-" + makeId(4);
-
+    console.log(req.body);
     const article = Article.build({
       userId: new mongoose.Types.ObjectId(req.currentUser!.id),
       title: req.body.title,
       slug: slug,
-      version: req.body.version,
       blocks: req.body.blocks,
       time: req.body.time,
     });
