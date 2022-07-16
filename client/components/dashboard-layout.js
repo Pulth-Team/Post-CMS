@@ -18,6 +18,8 @@ import AppContext from "../contexts/app";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 
+import { useSession, signIn, signOut } from "next-auth/react";
+
 export default function Layout({ title, relatedTitle, children }) {
   const MenuData = [
     {
@@ -54,8 +56,9 @@ export default function Layout({ title, relatedTitle, children }) {
 
   const router = useRouter();
 
-  const Context = useContext(AppContext);
-  const username = Context.userData.username;
+  const { data: session, status } = useSession();
+  const username = status == "loading" ? "..." : session.user.name;
+  const photoUrl = status == "loading" ? "..." : session.user.image;
 
   return (
     <div>
@@ -170,12 +173,12 @@ export default function Layout({ title, relatedTitle, children }) {
               </p>
             </div>
 
-            <div className="flex items-center justify-between sm:w-min h-16">
-              <p className="hidden sm:block mr-2">{username}</p>
+            <div className="flex items-center justify-between h-16">
+              <p className="hidden sm:block mr-2 flex-shrink-0">{username}</p>
               <Popover className="h-12 w-12 flex-shrink-0">
                 <Popover.Button>
                   <img
-                    src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61"
+                    src={photoUrl}
                     className="rounded-full w-12 h-12 hover:cursor-pointer flex-grow-0 flex-shrink-0"
                   />
                 </Popover.Button>

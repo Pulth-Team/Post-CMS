@@ -1,32 +1,27 @@
 import Dashboard from "../components/dashboard-layout";
 
-import AppContext from "../contexts/app";
-import { useContext } from "react";
-
-import isAuthenticated from "../lib/isAuthenticated";
-import redirect from "../lib/redirect";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const DashboardPage = () => {
-  const { userData } = useContext(AppContext);
-
-  console.log(userData);
-  return <div>Hi {userData.username} welcome to Post-CMS dashboard </div>;
-};
-
-DashboardPage.getLayout = (page) => {
-  const { userData } = useContext(AppContext);
+  const { data: session, status } = useSession();
+  console.log(session, status);
   return (
-    <Dashboard title="Home Page" username={userData.username}>
-      {page}
+    <Dashboard title="Home Page" username={"a"}>
+      <div>
+        Hi welcome to Post-CMS dashboard
+        <a
+          href={`/api/auth/signin`}
+          className="p-1.5 bg-gray-200 m-1"
+          onClick={(e) => {
+            e.preventDefault();
+            signIn();
+          }}
+        >
+          gidup girş
+        </a>
+      </div>
     </Dashboard>
   );
-};
-
-DashboardPage.getInitialProps = async (ctx) => {
-  const isAuth = await isAuthenticated(ctx);
-  if (!isAuth) redirect("/login", ctx);
-
-  return { isAuth };
 };
 
 export default DashboardPage;

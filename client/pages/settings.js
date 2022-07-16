@@ -1,6 +1,5 @@
 import Dashboard from "../components/dashboard-layout";
-import useUser from "../hooks/use-user";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Dialog } from "@headlessui/react";
@@ -10,14 +9,10 @@ import isAuthenticated from "../lib/isAuthenticated";
 import redirect from "../lib/redirect";
 
 import Alert from "../components/alert";
-import AppContext from "../contexts/app";
 
 const SettingPage = function () {
   const [confirmEnabled, setConfirmEnabled] = useState(false);
   const [alertEnabled, setAlertEnabled] = useState(false);
-
-  // const { userData, loaded, setLoaded, setUserData } = useUser();
-  const { userData, setUserData } = useContext(AppContext);
 
   const [emailDisabled, setEmailDisabled] = useState(true);
   const [usernameDisabled, setUsernameDisabled] = useState(true);
@@ -82,7 +77,7 @@ const SettingPage = function () {
   };
 
   return (
-    <div>
+    <Dashboard title="Settings">
       <Alert
         open={alertEnabled}
         handle={setAlertEnabled}
@@ -279,12 +274,8 @@ const SettingPage = function () {
           Save
         </button>
       </div>
-    </div>
+    </Dashboard>
   );
-};
-
-SettingPage.getLayout = (page) => {
-  return <Dashboard title="Settings">{page}</Dashboard>;
 };
 
 SettingPage.getInitialProps = async (ctx) => {

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
-import AppContext from "../contexts/app";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,8 +16,6 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-
-  const { setUserData } = useContext(AppContext);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -125,6 +123,15 @@ export default function Login() {
             disabled={!emailValid || !passwordValid}
           >
             Sign in
+          </button>
+          <button
+            className="p-1.5 bg-gray-200 m-1"
+            onClick={(e) => {
+              e.preventDefault();
+              signIn();
+            }}
+          >
+            gidup girs
           </button>
           <p className="mt-1 w-4/5">
             Don't have a account? {""}

@@ -46,28 +46,26 @@ export default function CreatePage() {
     return <ProjectCard data={article} key={article._id} />;
   });
   return (
-    <div>
-      {NoProjectComp}
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-        {myArticles.length > 0 && ProjectList}
+    <Dashboard title="Projects">
+      <div>
+        {NoProjectComp}
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+          {myArticles.length > 0 && ProjectList}
 
-        {myArticles.length > 0 && (
-          <Link href="/projects/create">
-            <div className="group border-2 rounded-md flex flex-col items-center justify-center border-dashed hover:border-solid active:bg-neutral-200 hover:border-indigo-500 p-5">
-              <div>
-                <p className="group-hover:text-indigo-500 flex items-center gap-1">
-                  <PlusIcon className="w-4 inline-block "></PlusIcon>Create
-                  Project
-                </p>
+          {myArticles.length > 0 && (
+            <Link href="/projects/create">
+              <div className="group border-2 rounded-md flex flex-col items-center justify-center border-dashed hover:border-solid active:bg-neutral-200 hover:border-indigo-500 p-5">
+                <div>
+                  <p className="group-hover:text-indigo-500 flex items-center gap-1">
+                    <PlusIcon className="w-4 inline-block "></PlusIcon>Create
+                    Project
+                  </p>
+                </div>
               </div>
-            </div>
-          </Link>
-        )}
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
+    </Dashboard>
   );
 }
-
-CreatePage.getLayout = function getLayout(page) {
-  return <Dashboard title="Projects">{page}</Dashboard>;
-};
